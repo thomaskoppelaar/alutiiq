@@ -1,2 +1,3 @@
 alutiiq.code-workspace
 .vscode/
+**/__pycache__/**

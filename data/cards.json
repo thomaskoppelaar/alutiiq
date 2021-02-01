@@ -18,6 +18,14 @@
         "cost": 3,
         "cardtype": "money",
         "value": 2
+    },
+
+    "magic spell": {
+        "name": "magic spell",
+        "cost": 5,
+        "cardtype": "action",
+        "action": "magic_spell",
+        "description": "a simple, yet effective magic spell. allows the player to draw 2 cards."
     }
     
     
