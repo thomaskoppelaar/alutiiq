@@ -26,6 +26,14 @@
         "cardtype": "action",
         "action": "magic_spell",
         "description": "a simple, yet effective magic spell. allows the player to draw 2 cards."
+    },
+
+    "void card": {
+        "name": "void card",
+        "cost": 0,
+        "cardtype": "action",
+        "action": "nothing",
+        "description": "card used for testing."
     }
     
     

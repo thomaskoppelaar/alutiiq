@@ -42,7 +42,7 @@ class Player:
         while self.current_hand:
             self.discardpile.append(self.current_hand.pop())
 
-    def draw_cards(self, n: int) -> None:
+    def draw_cards(self, n: int, verbose: bool = True) -> None:
         """
         Tries to take n cards from the player's drawpile, and places them into the player's hand.
         If the drawpile is empty, the discard pile will be added onto the drawpile and shuffled.
@@ -67,7 +67,7 @@ class Player:
     
             # Pop a card from the draw pile, and add it onto the current hand
             card_drawn = self.drawpile.pop()
-            print("Drew card:", card_drawn.name)
+            if verbose: print("Drew card:", card_drawn.name)
             self.current_hand.append(card_drawn)
 
     def show_hand_cards(self) -> None:

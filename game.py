@@ -27,7 +27,7 @@ def start_new_game(p: Player, cd) -> None:
     random.shuffle(p.drawpile)
 
     # Draw 5 cards
-    p.draw_cards(5)
+    p.draw_cards(5, verbose=False)
 
 
 def start_turn(p: Player) -> None:
@@ -52,7 +52,7 @@ def end_turn(p: Player) -> None:
     
     print("Drawing 5 new cards...")
     # Draw 5 cards
-    p.draw_cards(5)
+    p.draw_cards(5, verbose=False)
 
     print("Ended turn.")
 
