@@ -66,7 +66,9 @@ class Player:
                 self.discard_to_draw()
     
             # Pop a card from the draw pile, and add it onto the current hand
-            self.current_hand.append(self.drawpile.pop())
+            card_drawn = self.drawpile.pop()
+            print("Drew card:", card_drawn.name)
+            self.current_hand.append(card_drawn)
 
     def show_hand_cards(self) -> None:
         """

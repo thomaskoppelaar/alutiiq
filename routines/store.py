@@ -1,5 +1,5 @@
 from data.player import Player
-from utils import load_card
+from utils import load_card, clear_screen
 
 def purchase_card(p: Player, card_name, cd, store) -> None:
     """
@@ -28,8 +28,9 @@ def purchase_card(p: Player, card_name, cd, store) -> None:
         
         # Confirm purchase
         p.purchases_left -= 1
-
+        clear_screen()
         print("Bought card: {0}".format(card_name))
+        print("===")
 
         # Add newly bought card to discard pile
         p.discardpile.append(card_bought)
@@ -73,6 +74,7 @@ def routine(p: Player, s: dict, cd) -> None:
             continue
 
         if player_choice == "C":
+            clear_screen()
             print("exited store.")
             break
 
