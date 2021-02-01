@@ -1,0 +1,25 @@
+{
+    "copper coin": {
+        "name": "copper coin",
+        "cost": 0,
+        "cardtype": "money",
+        "value": 1
+    },
+
+    "land": {
+        "name": "land",
+        "cost": 2,
+        "cardtype": "point"
+        
+    },
+
+    "silver coin": {
+        "name": "silver coin",
+        "cost": 3,
+        "cardtype": "money",
+        "value": 2
+    }
+    
+    
+    
+}
