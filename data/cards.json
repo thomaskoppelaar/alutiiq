@@ -3,21 +3,24 @@
         "name": "copper coin",
         "cost": 0,
         "cardtype": "money",
-        "value": 1
+        "value": 1,
+        "description": "A crude copper coin. Has the lowest monetary value, and is considered the base coin type."
     },
 
     "land": {
         "name": "land",
         "cost": 2,
         "cardtype": "point",
-        "value": 1
+        "value": 1,
+        "description": "Some humble land. Worth 1 point at the end of a game."
     },
 
     "silver coin": {
         "name": "silver coin",
         "cost": 3,
         "cardtype": "money",
-        "value": 2
+        "value": 2,
+        "description": "A shiny silver coin. Worth twice as much as a copper coin."
     },
 
     "magic spell": {
@@ -64,7 +67,7 @@
         "name": "castle",
         "cost": 8,
         "cardtype": "point",
-        "description": "A magnificent castle.",
+        "description": "A magnificent castle. Worth 6 points at the end of a game.",
         "value": 6
     }
     

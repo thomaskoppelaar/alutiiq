@@ -3,8 +3,7 @@ import random
 from utils import load_card, clear_screen, card_data
 from data.player import Player
 from data.session_objects import Store
-from routines import store
-from routines import actions
+from routines import actions, store, turns, information
 
 def start_new_game(p: Player, cd) -> None:
     """
@@ -13,6 +12,7 @@ def start_new_game(p: Player, cd) -> None:
     p: The player object to start the game with.
     cd: The card data object.
     """
+    clear_screen()
 
     # Add starter cards into deck
     p.deck = [load_card("copper coin", cd)] * 7
@@ -30,34 +30,6 @@ def start_new_game(p: Player, cd) -> None:
     p.draw_cards(5, verbose=False)
 
 
-def start_turn(p: Player) -> None:
-
-    # Get balance
-    p.current_hand_balance = p.get_hand_value()
-
-    # Set actions and purchases left
-    p.purchases_left = 1
-    p.actions_left = 1
-
-
-def end_turn(p: Player) -> None:
-    clear_screen()
-    
-    # Reset player balance
-    p.current_hand_balance = 0
-    p.bonus_coins = 0
-    p.amount_spent = 0
-    
-    # Put all remaining cards in hard onto the discard pile
-    print("Putting hand cards in discard pile...")
-    p.hand_to_discard()
-    
-    # Draw 5 cards
-    p.draw_cards(5, verbose=False)
-
-    print("Ended turn.")
-
-
 ### Start of program
 
 
@@ -68,24 +40,23 @@ mainguy = Player()
 start_new_game(mainguy, card_data)
 
 while 1:
-    start_turn(mainguy)
+    turns.start_turn(mainguy)
 
     mainguy.show_hand_cards()
 
     player_choice = ""
 
     while 1:
-
+        print("=== Turn options ===")
         print("show (S)tore, show (H)and")
         print("play (A)ction, (E)nd turn")
         print("screen (C)lear, (Q)uit game")
+        print("(I)nformation about a card")
+        print("====================")
 
         player_choice = input("Your choice: ")
         player_choice = player_choice.upper()
 
-        if player_choice not in ["E", "S", "H", "Q", "C", "A"]:
-            print("That's not valid input!")
-    
         if (player_choice == "Q"):
             exit(0)
         elif (player_choice == "C"):
@@ -96,10 +67,14 @@ while 1:
             mainguy.show_hand_cards()
 
         elif (player_choice == "E"):
-            end_turn(mainguy)
+            turns.end_turn(mainguy)
             break
         elif (player_choice == "S"):
             clear_screen()
             store.routine(mainguy, Store, card_data)
         elif (player_choice == "A"):
             actions.routine(mainguy, Store, card_data)
+        elif (player_choice == "I"):
+            information.routine(mainguy, Store, card_data)
+        else:
+            print("That's not valid input!")
