@@ -9,8 +9,8 @@
     "land": {
         "name": "land",
         "cost": 2,
-        "cardtype": "point"
-        
+        "cardtype": "point",
+        "value": 1
     },
 
     "silver coin": {
@@ -28,12 +28,44 @@
         "description": "a simple, yet effective magic spell. allows the player to draw 2 cards."
     },
 
+    "woodcutter": {
+        "name": "woodcutter",
+        "cost": 3,
+        "cardtype": "action",
+        "action": "woodcutter",
+        "description": "A humble woodcutter. +2 coin, +1 purchase."
+    },
+
+    "smithy": {
+        "name": "smithy",
+        "cost": 4,
+        "cardtype": "action",
+        "action": "smithy",
+        "description": "A smithy. +3 cards."
+    },
+
+    "festival": {
+        "name": "festival",
+        "cost": 5,
+        "cardtype": "action",
+        "action": "festival",
+        "description": "An exciting festival. +2 actions, +1 purchase, +2 coin."
+    },
+
     "void card": {
         "name": "void card",
         "cost": 0,
         "cardtype": "action",
         "action": "nothing",
         "description": "card used for testing."
+    },
+
+    "castle": {
+        "name": "castle",
+        "cost": 8,
+        "cardtype": "point",
+        "description": "A magnificent castle.",
+        "value": 6
     }
     
     

@@ -18,7 +18,13 @@ class Player:
 
     purchases_left: int = 0
     actions_left: int = 0
-    current_turn_balance: int = 0
+
+    # Amount of money in hand through treasure.
+    current_hand_balance: int = 0
+
+    bonus_coins: int = 0
+
+    amount_spent: int = 0
 
     def discard_to_draw(self) -> None:
         """
@@ -59,7 +65,7 @@ class Player:
             # If the draw pile is empty, and the discard pile is empty, we're can't do any more.
             if (len(self.drawpile) == 0 and len(self.discardpile) == 0):
                 print("Nothing left to draw!")
-                return
+                break
 
             # If the draw pile is empty, and the discard pile isn't, put everything into the draw pile.
             if (len(self.drawpile) == 0):
@@ -69,6 +75,9 @@ class Player:
             card_drawn = self.drawpile.pop()
             if verbose: print("Drew card:", card_drawn.name)
             self.current_hand.append(card_drawn)
+        
+        # Update hand value
+        self.current_hand_balance = self.get_hand_value()
 
     def show_hand_cards(self) -> None:
         """
@@ -83,23 +92,25 @@ class Player:
         for card in card_set:
             print("  - {0} - (x{1})".format(card, sum([1 for i in self.current_hand if i.name == card])))
 
-        print("Total hand value: {0}".format(self.get_hand_value()))
+        print("Total money in hand:", self.get_hand_value())
+        print("Money gained through actions:", self.bonus_coins)
 
     def get_hand_value(self) -> int:
         """
-        Gets the hand value of the player.
+        Gets the hand value (money) of the player.
         This is not equal to the value that the player has left to spend.
         """
         res = 0
 
         for card in self.current_hand:
-            res += card.value
+            if "money" in card.cardtype:
+                res += card.value
 
         return res
 
-    def get_deck_value(self) -> int:
+    def get_deck_score(self) -> int:
         """
-        Gets the deck value of the player.
+        Gets the points of the player.
         This is used as the player's final score.
         """
         res = 0

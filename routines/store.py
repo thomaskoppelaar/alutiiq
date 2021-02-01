@@ -22,7 +22,7 @@ def purchase_card(p: Player, card_name, cd, store) -> None:
         # Load in the card
         card_bought = load_card(card_name, cd)
 
-        if card_bought.cost > p.current_turn_balance:
+        if card_bought.cost > (p.current_hand_balance + p.bonus_coins - p.amount_spent):
             print("Insufficient funds!")
             return
         
@@ -38,7 +38,7 @@ def purchase_card(p: Player, card_name, cd, store) -> None:
         p.deck.append(card_bought)
 
         # Subtract cost from balance
-        p.current_turn_balance -= card_bought.cost
+        p.amount_spent += card_bought.cost
 
         # Remove one card from the store list
         store[card_name] -= 1   
@@ -60,7 +60,14 @@ def routine(p: Player, s: dict, cd) -> None:
         print(" {0}.".format(i), name, qty, card_price)
         i += 1
 
-    print("You have: ${0} left.".format(p.current_turn_balance))
+    print("You have: {0} (+{1}) - {2} = ${3} left."
+        .format(
+            p.current_hand_balance, 
+            p.bonus_coins,
+            p.amount_spent,
+            p.current_hand_balance + p.bonus_coins - p.amount_spent
+        )
+    )
     print("Purchases left: {0}".format(p.purchases_left))
 
     print("(B)uy item, (C)ancel")

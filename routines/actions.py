@@ -59,3 +59,15 @@ def perform_action(p: Player, s: dict, cd: dict, card_name: str) -> None:
 
 def magic_spell(p: Player, s: dict, cd: dict) -> None:
     p.draw_cards(2)
+
+def woodcutter(p: Player, s: dict, cd: dict) -> None:
+    p.bonus_coins += 2
+    p.purchases_left += 1
+
+def smithy(p: Player, s: dict, cd: dict) -> None:
+    p.draw_cards(3)
+
+def festival(p: Player, s: dict, cd: dict) -> None:
+    p.actions_left += 2
+    p.purchases_left += 1
+    p.bonus_coins += 2
