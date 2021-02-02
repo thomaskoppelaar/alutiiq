@@ -53,11 +53,14 @@ def routine(p: Player, s: dict, cd) -> None:
     i = 1
     for name, qty in s.items():
         qty = "x("+str(qty)+")" if qty > 0 else "(sold out!)" 
-        card_price = "$" + str(load_card(name, cd).cost)
+        card = load_card(name, cd)
+        card_price = "$" + str(card.cost)
 
         # example output:
         # 1. silver coin x(7) $3
         print(" {0}.".format(i), name, qty, card_price)
+        print("  - {0}".format(card.description))
+        print()
         i += 1
 
     print("You have: {0} (+{1}) - {2} = ${3} left."

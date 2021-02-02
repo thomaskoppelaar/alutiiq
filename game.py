@@ -19,7 +19,7 @@ def start_new_game(p: Player, cd) -> None:
     # Add starter cards into deck
     p.deck = [load_card("copper coin", cd)] * 7
     p.deck += [load_card("land", cd)] * 3
-    p.deck += [load_card("magic spell", cd)]
+    # p.deck += [load_card("magic spell", cd)]
     
     
     # Copy deck into drawpile
