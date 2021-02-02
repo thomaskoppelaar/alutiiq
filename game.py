@@ -49,12 +49,12 @@ while 1:
     player_choice = ""
 
     while 1:
-        print("=== Turn options ===")
+        print("=== Turn:", session_objects.Turn_counter, "===")
         print("show (S)tore, show (H)and")
         print("play (A)ction, (E)nd turn")
         print("screen (C)lear, (Q)uit game")
         print("(I)nformation about a card")
-        print("====================")
+        print("===============")
 
         player_choice = input("Your choice: ")
         player_choice = player_choice.upper()
