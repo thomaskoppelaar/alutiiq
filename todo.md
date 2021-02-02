@@ -7,6 +7,12 @@
      - Wanted result: `from data import Player`
 - [X] Docs: Write out how the game works, what the rules are, and what a turn consists of
 - [X] Feature - Turns: Keep track of which turn it is
+- [~] Interface - more player-friendly.
+    - [X] Show how many actions the player has left.
+    - [ ] Show card type in the information screen, the store.
+    - [ ] Show card description in the action screen.
+    - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
+- [ ] Feature: Add emphasis and color to text.
 - [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
 - [ ] Enhancement - actions/information: Have the description of a card shown when it is played.
     - [ ] When viewing the information of a card, show the name and the description.

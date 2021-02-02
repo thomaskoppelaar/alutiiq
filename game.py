@@ -50,6 +50,8 @@ while 1:
 
     while 1:
         print("=== Turn:", session_objects.Turn_counter, "===")
+        print("Actions left:", mainguy.actions_left)
+        print("Purchases left:", mainguy.purchases_left)
         print("show (S)tore, show (H)and")
         print("play (A)ction, (E)nd turn")
         print("screen (C)lear, (Q)uit game")
