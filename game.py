@@ -1,7 +1,7 @@
 import random
 
 from utils import load_card, clear_screen, card_data
-from data import Player, Store
+from data import Player, Store, session_objects
 from routines import actions, store, turns, information
 
 def start_new_game(p: Player, cd) -> None:
@@ -11,6 +11,9 @@ def start_new_game(p: Player, cd) -> None:
     p: The player object to start the game with.
     cd: The card data object.
     """
+    # Reset turn counter
+    session_objects.Turn_counter = 0
+
     clear_screen()
 
     # Add starter cards into deck
