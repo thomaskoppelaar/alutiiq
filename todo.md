@@ -1,6 +1,11 @@
 - [X] Feature: Information option in turn
-- [ ] Enhancement - actions: Allow player to pick a number rather than having to type the full action card
+- [X] Enhancement - actions: Allow player to pick a number rather than having to type the full action card
 - [ ] Refactor: Figure out a way to shorten data.xyz to just become part of the data package
-    Example: to import the player object, you'd need to write `from data.player import Player`
-    End result: `from data import Player`
-- [ ] Docs: Write out how the game works, what the rules are, and what a turn consists of
+    - Example: to import the player object, you'd need to write `from data.player import Player`
+     - Wanted result: `from data import Player`
+- [X] Docs: Write out how the game works, what the rules are, and what a turn consists of
+- [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
+- [ ] Enhancement - actions/information: Have the description of a card shown when it is played.
+    - [ ] When viewing the information of a card, show the name and the description.
+    - [ ] Perhaps pick a random adjective as well, for fun? E.g. "A humble/simple/cruddy/shoddy building."
+    - [ ] When playing an action, the new description (stating what it does) gets printed

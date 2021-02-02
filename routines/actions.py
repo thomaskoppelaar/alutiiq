@@ -16,8 +16,10 @@ def routine(p: Player, s: dict, cd: dict) -> None:
         return
 
     print("Which action do you want to play?")
+    i = 1
     for card in action_cards:
-        print(" -", card.name)
+        print(" {0}.".format(i), card.name)
+        i += 1
     
     player_choice = ""
     while 1:
@@ -32,8 +34,18 @@ def routine(p: Player, s: dict, cd: dict) -> None:
             print("Action cancelled.")
             break
         else:
-            perform_action(p, s, cd, player_choice)
-            break
+            if player_choice.isdigit():
+                try:
+                    index = int(player_choice) - 1
+                    card_name = action_cards[index].name
+                    perform_action(p, s, cd, card_name)
+                    break
+                except:
+                    print("Invalid number choice!")
+
+            else:
+                perform_action(p, s, cd, player_choice)
+                break
 
 
 # WIP
