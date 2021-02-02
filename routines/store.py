@@ -1,4 +1,4 @@
-from data.player import Player
+from data import Player
 from utils import load_card, clear_screen
 
 def purchase_card(p: Player, card_name, cd, store) -> None:

@@ -1,5 +1,5 @@
+from data import Player
 from utils import load_card, clear_screen
-from data.player import Player
 
 def routine(p: Player, s: dict, cd: dict) -> None:
     """

@@ -1,4 +1,4 @@
-from data.player import Player
+from data import Player
 from utils import clear_screen
 
 def start_turn(p: Player) -> None:

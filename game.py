@@ -1,8 +1,7 @@
 import random
 
 from utils import load_card, clear_screen, card_data
-from data.player import Player
-from data.session_objects import Store
+from data import Player, Store
 from routines import actions, store, turns, information
 
 def start_new_game(p: Player, cd) -> None:

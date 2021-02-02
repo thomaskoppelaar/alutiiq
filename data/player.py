@@ -1,4 +1,4 @@
-from data.card import Card
+from data import Card
 import random
 
 # Player object

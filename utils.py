@@ -2,7 +2,7 @@ import os
 import json
 from types import SimpleNamespace
 
-from data.card import Card
+from data import Card
 
 # Load card data
 f = open("data/cards.json", "r")

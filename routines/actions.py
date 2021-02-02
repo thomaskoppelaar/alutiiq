@@ -1,5 +1,5 @@
 # Action cards probably deserve their own little file
-from data.player import Player
+from data import Player
 from utils import clear_screen
 
 def routine(p: Player, s: dict, cd: dict) -> None:
