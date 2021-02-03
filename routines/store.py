@@ -1,5 +1,5 @@
-from data import Player
-from utils import load_card, clear_screen
+from data import Player, Card
+from utils import load_card, clear_screen, show_cards, card_selection
 
 def purchase_card(p: Player, card_name, cd, store) -> None:
     """
@@ -89,18 +89,8 @@ def routine(p: Player, s: dict, cd) -> None:
     print("=#= Welcome to the store! =#=")
     print("Any bought item will go onto your discard pile.")
     print("Items for sale:")
-    i = 1
-    for name, qty in s.items():
-        qty = "x("+str(qty)+")" if qty > 0 else "(sold out!)" 
-        card = load_card(name, cd)
-        card_price = "$" + str(card.cost)
-
-        # example output:
-        # 1. silver coin x(7) $3
-        print(" {0}.".format(i), name, qty, card_price)
-        print("  - {0}".format(card.description))
-        print()
-        i += 1
+    
+    show_cards(list(s.keys()), cd, show_description=True, show_type=True, show_cost=True)
 
     print("You have: {0} (+{1}) - {2} = ${3} left."
         .format(
@@ -112,45 +102,14 @@ def routine(p: Player, s: dict, cd) -> None:
     )
     print("Purchases left: {0}".format(p.purchases_left))
 
-    print("(B)uy item, (C)ancel")
-    player_choice = ""
-    while 1:
-        player_choice = input("Your choice: ")
-        player_choice = player_choice.upper()
+    card: Card = card_selection(list(s.keys()), cd)
 
-        if len(player_choice) == 0 or player_choice[0] not in ["B", "C"]:
-            print("That's not an option!")
-            continue
+    # Check if cards was picked
+    if card is None: return
 
-        if player_choice == "C":
-            clear_screen()
-            print("exited store.")
-            break
 
-        elif player_choice == "B":
-            if (p.purchases_left <= 0):
-                print("You don't have any purchases left.")
-                break
-
-            print("Which item would you like to buy? (C to cancel)")
-            item_choice = input("Your purchase: ")
-            item_choice = item_choice.lower()
-
-            if (item_choice == "c"): break
-
-            if item_choice.isdigit():
-                try:
-                    index = int(item_choice)-1
-                    card_name = list(s.keys())[index]
-
-                    purchase_card(p, card_name, cd, s)
-                    break
-                except:
-                    print("Invalid number choice!")
-            else:
-                if s.get(item_choice) == None:
-                    print("That item does not exist in the store.")
-                    break
-                else:
-                    purchase_card(p, item_choice, cd, s)
-                    break
+    if (p.purchases_left <= 0):
+        print("You don't have any purchases left.")
+        return
+    
+    purchase_card(p, card.name, cd, s)

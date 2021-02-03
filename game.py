@@ -16,7 +16,7 @@ def start_new_game(p: Player, cd) -> None:
 
     clear_screen()
     print("=== ALUTIIQ ===")
-    print("Version: 0.1")
+    print("Version: 0.2")
     print("=== GAME START ===")
 
     # Add starter cards into deck
@@ -47,11 +47,10 @@ start_new_game(mainguy, card_data)
 while 1:
     turns.start_turn(mainguy)
 
-    mainguy.show_hand_cards()
-
     player_choice = ""
 
     while 1:
+        mainguy.show_hand_cards()
         print("=== Turn:", session_objects.Turn_counter, "===")
         print("Actions left:", mainguy.actions_left)
         print("Purchases left:", mainguy.purchases_left)

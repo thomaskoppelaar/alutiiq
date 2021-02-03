@@ -26,6 +26,7 @@ def end_turn(p: Player) -> None:
             print("=== GAME WON ===")
             print("You've won the castle race!")
             print("Turns taken:", session_objects.Turn_counter)
+            input("Press enter to exit.")
             exit(0)
 
     p.played_cards_to_discard()
