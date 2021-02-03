@@ -5,6 +5,7 @@ Store = {
     "gold coin": 6,
     "platinum coin": 2,
     "land": 10,
+    "village": 8,
     "festival": 4,
     "smithy": 5,
     "mine": 2,

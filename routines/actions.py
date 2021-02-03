@@ -168,3 +168,8 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
 def bandit_sp(p: Player, s: dict, cd: dict) -> bool:
     store.gift_card(p, "gold coin", cd, s, pile="discard")
     return True
+
+def village(p: Player, s: dict, cd: dict) -> bool:
+    p.add_actions(2)
+    p.draw_cards(1)
+    return True

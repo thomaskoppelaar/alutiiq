@@ -12,7 +12,7 @@
     - [X] Show card type in the information screen and the store.
     - [X] Show card description in the action screen.
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
-- [ ] Feature - Cards: new cards
+- [~] Feature - Cards: new cards
     - [ ] Chapel
         - [X] Requires working trashpile
         - [X] Requires trashing method
@@ -25,6 +25,11 @@
         - [X] Worth 3 coin
     - [X] Bandit
         -  [X] Gain 1 gold card
+    - [X] Village
+        -  [X] +2 actions, +1 card
+- [ ] Bug: Add a temporary discard pile so that turns cannot be infinite
+    - [ ] Whenever an action card gets played, it should be put on a temporary pile, rather than the discard pile
+    - [ ] Otherwise, drawing your entire deck and looping through festival + mine + smithy + village is infinite
 - [ ] Feature: Add emphasis and color to text.
 - [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
 - [ ] Enhancement - actions/information: Have the description of a card shown when it is played.

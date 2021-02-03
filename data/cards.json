@@ -110,6 +110,14 @@
         "cardtype": "action",
         "description": "Put a gold coin on top of your discard pile.",
         "action": "bandit_sp"
+    },
+
+    "village": {
+        "name": "village",
+        "cost": 3,
+        "cardtype": "action",
+        "description": "+1 card, +2 actions.",
+        "action": "village"
     }
     
     
