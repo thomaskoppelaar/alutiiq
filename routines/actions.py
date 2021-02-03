@@ -65,6 +65,8 @@ def perform_action(p: Player, s: dict, cd: dict, card_name: str) -> None:
 
                 if action_performed:
                     p.actions_left -= 1
+
+                    # Move card from hand onto discard pile
                     p.current_hand.remove(card)
                     p.discardpile.append(card)
                 
@@ -142,8 +144,7 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
                     p.trash_hand_card(money_cards[card_name])
                     secret_card = load_card("platinum coin", cd)
                     print("That's some incredible value right there!")
-                    p.deck.append(secret_card)
-                    p.current_hand.append(secret_card)
+                    p.add_hand_card(secret_card)
                     return True
                 elif card_name == "silver coin":
                     p.trash_hand_card(money_cards[card_name])

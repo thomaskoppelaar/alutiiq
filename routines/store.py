@@ -31,10 +31,7 @@ def purchase_card(p: Player, card_name, cd, store) -> None:
         clear_screen()
         print("Bought card: {0}".format(card_name))
 
-        # Add newly bought card to discard pile
-        p.discardpile.append(card_bought)
-        # And into deck
-        p.deck.append(card_bought)
+        p.add_discardpile_card(card_bought)
 
         # Subtract cost from balance
         p.amount_spent += card_bought.cost
@@ -73,16 +70,15 @@ def gift_card(p: Player, card_name: str, cd, store, pile: str=None) -> None:
 
         card = load_card(card_name, cd)
 
-        # Add card to deck
-        p.deck.append(card)
+       
 
         # Decide where to add the card
         if pile == "hand":
-            p.current_hand.append(card)
+            p.add_hand_card(card)
         elif pile == "draw":
-            p.drawpile.append(card)
+            p.add_drawpile_card(card)
         else: 
-            p.discardpile.append(card)
+            p.add_discardpile_card(card)
 
         remove_card(p, card_name, cd, store)
 

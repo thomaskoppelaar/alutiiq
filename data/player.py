@@ -79,6 +79,20 @@ class Player:
         # Update hand value
         self.current_hand_balance = self.get_hand_value()
 
+    
+    def add_hand_card(self, card: Card) -> None:
+        self.deck.append(card)
+        self.current_hand.append(card)
+        self.current_hand_balance = self.get_hand_value()
+    
+    def add_drawpile_card(self, card: Card) -> None:
+        self.deck.append(card)
+        self.drawpile.append(card)
+
+    def add_discardpile_card(self, card: Card) -> None:
+        self.deck.append(card)
+        self.discardpile.append(card)
+
     def trash_hand_card(self, card: Card) -> None:
         """
         Remove a card from the player's hand.
