@@ -9,9 +9,20 @@
 - [X] Feature - Turns: Keep track of which turn it is
 - [~] Interface - more player-friendly.
     - [X] Show how many actions the player has left.
-    - [ ] Show card type in the information screen, the store.
-    - [ ] Show card description in the action screen.
+    - [X] Show card type in the information screen and the store.
+    - [X] Show card description in the action screen.
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
+- [ ] Feature - Cards: new cards
+    - [ ] Chapel
+        - [ ] Requires working trashpile
+        - [ ] Requires trashing method
+        - [ ] Card data
+    - [ ] Mine
+        - [ ] Trash a money card, gain one quality higher
+    - [ ] Gold
+        - [ ] Worth 3 coin
+    - [ ] Bandit
+        -  [ ] Gain 1 gold card
 - [ ] Feature: Add emphasis and color to text.
 - [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
 - [ ] Enhancement - actions/information: Have the description of a card shown when it is played.
@@ -26,3 +37,10 @@
         - [ ] Start screen
         - [ ] A "restart" option
     - [ ] Countdown mode: Get as much points as possible in X amount of turns
+- [ ] Refactor - Interface: Have a generic method for choosing cards out of a list
+    - [ ] Method takes in a list of choices, and outputs a string
+    - [ ] Options for displaying certain information:
+        - [ ] Description
+        - [ ] Card type
+        - [ ] Cost
+    - [ ] Minimum and maximum amount of choices

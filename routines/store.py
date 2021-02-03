@@ -49,6 +49,7 @@ def routine(p: Player, s: dict, cd) -> None:
     Store routine. Allows player to view and buy cards.
     """
     print("=#= Welcome to the store! =#=")
+    print("Any bought item will go onto your discard pile.")
     print("Items for sale:")
     i = 1
     for name, qty in s.items():

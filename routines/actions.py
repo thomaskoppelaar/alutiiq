@@ -1,5 +1,5 @@
 # Action cards probably deserve their own little file
-from data import Player
+from data import Player, Card
 from utils import clear_screen
 
 def routine(p: Player, s: dict, cd: dict) -> None:
@@ -10,15 +10,16 @@ def routine(p: Player, s: dict, cd: dict) -> None:
     if p.actions_left <= 0:
         print("You don't have any actions left.")
         return
-    action_cards = [card for card in p.current_hand if "action" in card.cardtype]
+    action_cards: [Card] = [card for card in p.current_hand if "action" in card.cardtype]
     if len(action_cards) == 0:
         print("You don't have any action cards to play.")
         return
 
     print("Which action do you want to play?")
-    i = 1
+    i: int = 1
     for card in action_cards:
         print(" {0}.".format(i), card.name)
+        print("  - {0}".format(card.description))
         i += 1
     
     player_choice = ""
@@ -73,13 +74,13 @@ def magic_spell(p: Player, s: dict, cd: dict) -> None:
     p.draw_cards(2)
 
 def woodcutter(p: Player, s: dict, cd: dict) -> None:
-    p.bonus_coins += 2
-    p.purchases_left += 1
+    p.add_money(2)
+    p.add_purchases(1)
 
 def smithy(p: Player, s: dict, cd: dict) -> None:
     p.draw_cards(3)
 
 def festival(p: Player, s: dict, cd: dict) -> None:
-    p.actions_left += 2
-    p.purchases_left += 1
-    p.bonus_coins += 2
+    p.add_actions(2)
+    p.add_purchases(1)
+    p.add_money(2)

@@ -25,14 +25,22 @@ def routine(p: Player, s: dict, cd: dict) -> None:
         if player_choice == "s":
             clear_screen()
             print("Cards in store:")
-            for card in s.keys():
-                print(" -", card)
+            for card_name in s.keys():
+                card = load_card(card_name, cd)
+                print(" - {0} ({1})".format(card.name, card.cardtype))
+                print("  - {0}".format(card.description))
+                print("  - costs: {0}".format(card.cost))
+                print()
             continue
         if player_choice == "a":
             clear_screen()
             print("All cards in this game:")
-            for card in cd.keys():
-                print(" -", card)
+            for card_name in cd.keys():
+                card = load_card(card_name, cd)
+                print(" - {0} ({1})".format(card.name, card.cardtype))
+                print("  - {0}".format(card.description))
+                print("  - costs: {0}".format(card.cost))
+                print()
             continue
         
         try:
@@ -40,6 +48,7 @@ def routine(p: Player, s: dict, cd: dict) -> None:
             
             print("=== INFORMATION ABOUT CARD ===")
             print(information_card.description)
+            print("costs: {0}".format(information_card.cost))
             continue
         except:
             print("That card does not exist.")

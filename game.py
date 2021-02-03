@@ -15,6 +15,9 @@ def start_new_game(p: Player, cd) -> None:
     session_objects.Turn_counter = 0
 
     clear_screen()
+    print("=== ALUTIIQ ===")
+    print("Version: 0.1")
+    print("=== GAME START ===")
 
     # Add starter cards into deck
     p.deck = [load_card("copper coin", cd)] * 7

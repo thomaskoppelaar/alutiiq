@@ -119,5 +119,24 @@ class Player:
             if "point" in card.cardtype:
                 res += card.value
 
-   
+    def add_actions(self, i: int) -> None:
+       """
+       Should be called whenever the player gets bonus actions.
+       """
+       print("Gained {0} bonus action(s)! (Lasts only this turn.)".format(i))
+       self.actions_left += i
 
+    def add_purchases(self, i: int) -> None:
+        """
+        Should be called whenever the player gets bonus purchases.
+        """
+        print("Gained {0} bonus purchase(s)! (Lasts only this turn.)".format(i))
+        self.purchases_left += i
+    
+    def add_money(self, i: int) -> None:
+        """
+        Should be called whenever the player gets bonus money.
+        """
+        print("Gained {0} bonus money! (Lasts only this turn.)".format(i))
+        
+        self.bonus_coins += i

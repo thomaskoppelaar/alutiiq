@@ -4,7 +4,7 @@
         "cost": 0,
         "cardtype": "money",
         "value": 1,
-        "description": "A crude copper coin. Has the lowest monetary value, and is considered the base coin type."
+        "description": "Has the lowest monetary value, and is considered the base coin type."
     },
 
     "land": {
@@ -12,7 +12,7 @@
         "cost": 2,
         "cardtype": "point",
         "value": 1,
-        "description": "Some humble land. Worth 1 point at the end of a game."
+        "description": "Worth 1 point at the end of a game."
     },
 
     "silver coin": {
@@ -20,7 +20,7 @@
         "cost": 3,
         "cardtype": "money",
         "value": 2,
-        "description": "A shiny silver coin. Worth twice as much as a copper coin."
+        "description": "Worth twice as much as a copper coin."
     },
 
     "magic spell": {
@@ -28,7 +28,7 @@
         "cost": 5,
         "cardtype": "action",
         "action": "magic_spell",
-        "description": "a simple, yet effective magic spell. allows the player to draw 2 cards."
+        "description": "+2 cards."
     },
 
     "woodcutter": {
@@ -36,7 +36,7 @@
         "cost": 3,
         "cardtype": "action",
         "action": "woodcutter",
-        "description": "A humble woodcutter. +2 coin, +1 purchase."
+        "description": "+2 coin, +1 purchase."
     },
 
     "smithy": {
@@ -44,7 +44,7 @@
         "cost": 4,
         "cardtype": "action",
         "action": "smithy",
-        "description": "A smithy. +3 cards."
+        "description": "+3 cards."
     },
 
     "festival": {
@@ -52,7 +52,7 @@
         "cost": 5,
         "cardtype": "action",
         "action": "festival",
-        "description": "An exciting festival. +2 actions, +1 purchase, +2 coin."
+        "description": "+2 actions, +1 purchase, +2 coin."
     },
 
     "void card": {
@@ -67,7 +67,7 @@
         "name": "castle",
         "cost": 8,
         "cardtype": "point",
-        "description": "A magnificent castle. Worth 6 points at the end of a game.",
+        "description": "Worth 6 points at the end of a game.",
         "value": 6
     }
     
