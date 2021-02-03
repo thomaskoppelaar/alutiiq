@@ -96,17 +96,20 @@ def festival(p: Player, s: dict, cd: dict) -> bool:
     return True
 
 def mine(p: Player, s: dict, cd: dict) -> bool:
-    money_cards: [Card] = [card for card in p.current_hand if "money" in card.cardtype]
+    money_cards = {}
+    for card in p.current_hand:
+        if "money" in card.cardtype:
+            money_cards.update({card.name: card})
     
-    if len(money_cards) == 0:
+    if len(money_cards.keys()) == 0:
         print("No money cards to upgrade!")
         return False
 
     else:
         print("Which card do you want to upgrade?")
         i: int = 1
-        for card in money_cards:
-            print(" {0}.".format(i), card.name)
+        for card_name in money_cards.keys():
+            print(" {0}.".format(i), card_name)
             i += 1
     player_choice = ""
     while 1:
@@ -121,39 +124,44 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
             print("Action cancelled.")
             return False
         else:
-            if player_choice.isdigit():
-                try:
+            try:
+                index = -1
+                card_name = ""
+                if player_choice.isdigit():
                     index = int(player_choice) - 1
-                    card_name = money_cards[index].name
-                    clear_screen()
-                    if card_name == "platinum coin":
-                        print("Sorry, the fun stops here.")
-                        return False
-                    elif card_name == "gold coin":
-                        p.trash_hand_card(money_cards[index])
-                        secret_card = load_card("platinum coin", cd)
-                        print("That's some incredible value right there!")
-                        p.deck.append(secret_card)
-                        p.current_hand.append(secret_card)
-                        return True
-                    elif card_name == "silver coin":
-                        p.trash_hand_card(money_cards[index])
-                        store.gift_card(p, "gold coin", cd, s, pile="hand")
-                        print("Upgraded a silver to a gold coin.")
-                        return True
-                    elif card_name == "copper coin":
-                        p.trash_hand_card(money_cards[index])
-                        store.gift_card(p, "silver coin", cd, s, pile="hand")
-                        print("Upgraded a copper to a silver coin.")
-                        return True
+                    card_name = list(money_cards.keys())[index]
+                else:
+                    if money_cards.get(player_choice) is not None:
+                        card_name = player_choice
 
-                    
-                except:
-                    print("Invalid number choice!")
-                    continue
+                clear_screen()
+                if card_name == "platinum coin":
+                    print("Sorry, the fun stops here.")
+                    return False
+                elif card_name == "gold coin":
+                    p.trash_hand_card(money_cards[card_name])
+                    secret_card = load_card("platinum coin", cd)
+                    print("That's some incredible value right there!")
+                    p.deck.append(secret_card)
+                    p.current_hand.append(secret_card)
+                    return True
+                elif card_name == "silver coin":
+                    p.trash_hand_card(money_cards[card_name])
+                    store.gift_card(p, "gold coin", cd, s, pile="hand")
+                    print("Upgraded a silver to a gold coin.")
+                    return True
+                elif card_name == "copper coin":
+                    p.trash_hand_card(money_cards[card_name])
+                    store.gift_card(p, "silver coin", cd, s, pile="hand")
+                    print("Upgraded a copper to a silver coin.")
+                    return True
 
-            else:
-                print("uhh, pick a number, thanks")
+                
+            except:
+                print("Invalid card choice!")
+                continue
+
+            
 
 
 def bandit_sp(p: Player, s: dict, cd: dict) -> bool:
