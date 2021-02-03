@@ -102,6 +102,14 @@
         "cardtype": "money",
         "description": "Worth a staggering 5 coins.",
         "value": 5
+    },
+
+    "bandit": {
+        "name": "bandit",
+        "cost": 4,
+        "cardtype": "action",
+        "description": "Put a gold coin on top of your discard pile.",
+        "action": "bandit_sp"
     }
     
     

@@ -18,11 +18,12 @@
         - [X] Requires trashing method
         - [X] Card data
         - [ ] Function
-    - [ ] Mine
-        - [ ] Trash a money card, gain one quality higher
-    - [ ] Gold
-        - [ ] Worth 3 coin
-    - [ ] Bandit
+    - [X] Mine
+        - [X] Trash a money card, gain one quality higher
+        - [ ] Allow player to input a card name
+    - [X] Gold
+        - [X] Worth 3 coin
+    - [X] Bandit
         -  [ ] Gain 1 gold card
 - [ ] Feature: Add emphasis and color to text.
 - [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.

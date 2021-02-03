@@ -154,4 +154,8 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
 
             else:
                 print("uhh, pick a number, thanks")
-                
+
+
+def bandit_sp(p: Player, s: dict, cd: dict) -> bool:
+    store.gift_card(p, "gold coin", cd, s, pile="discard")
+    return True
