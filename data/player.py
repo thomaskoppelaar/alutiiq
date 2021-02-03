@@ -1,4 +1,4 @@
-from data import Card
+from data import Card, session_objects
 import random
 
 # Player object
@@ -78,6 +78,25 @@ class Player:
         
         # Update hand value
         self.current_hand_balance = self.get_hand_value()
+
+    def trash_hand_card(self, card: Card) -> None:
+        """
+        Remove a card from the player's hand.
+        """
+        try:
+
+            # Remove card from player
+            self.current_hand.remove(card)
+            self.deck.remove(card)
+
+            # Add card into trashpile
+            session_objects.Trashpile.append(card)
+
+            print("Removed {0} from deck.".format(card.name))
+
+        except ValueError:
+
+            print("Can't remove this card!") 
 
     def show_hand_cards(self) -> None:
         """

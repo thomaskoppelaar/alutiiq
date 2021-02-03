@@ -69,6 +69,39 @@
         "cardtype": "point",
         "description": "Worth 6 points at the end of a game.",
         "value": 6
+    },
+
+    "chapel": {
+        "name": "chapel",
+        "cost": 2,
+        "cardtype": "action",
+        "description": "Lets you remove up to 4 cards from your deck that are currently in your hand.",
+        "action": "chapel"
+    },
+
+    "mine": {
+        "name": "mine",
+        "cost": 5,
+        "cardtype": "action",
+        "description": "Allows you to upgrade a money card into a better version. (e.g. copper to silver, silver to gold.) The upgraded card stays in your hand.",
+        "action": "mine"
+    
+    },
+
+    "gold coin": {
+        "name": "gold coin",
+        "cost": 6,
+        "cardtype": "money",
+        "description": "Worth as much as 3 copper coins.",
+        "value": 3
+    },
+
+    "platinum coin": {
+        "name": "platinum coin",
+        "cost": 9,
+        "cardtype": "money",
+        "description": "Worth a staggering 5 coins.",
+        "value": 5
     }
     
     

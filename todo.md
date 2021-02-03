@@ -14,9 +14,10 @@
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
 - [ ] Feature - Cards: new cards
     - [ ] Chapel
-        - [ ] Requires working trashpile
-        - [ ] Requires trashing method
-        - [ ] Card data
+        - [X] Requires working trashpile
+        - [X] Requires trashing method
+        - [X] Card data
+        - [ ] Function
     - [ ] Mine
         - [ ] Trash a money card, gain one quality higher
     - [ ] Gold

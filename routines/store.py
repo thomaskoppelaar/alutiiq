@@ -30,7 +30,6 @@ def purchase_card(p: Player, card_name, cd, store) -> None:
         p.purchases_left -= 1
         clear_screen()
         print("Bought card: {0}".format(card_name))
-        print("===")
 
         # Add newly bought card to discard pile
         p.discardpile.append(card_bought)
@@ -40,9 +39,52 @@ def purchase_card(p: Player, card_name, cd, store) -> None:
         # Subtract cost from balance
         p.amount_spent += card_bought.cost
 
-        # Remove one card from the store list
-        store[card_name] -= 1   
+         
 
+
+def remove_card(p: Player, card_name: str, cd, store) -> None:
+    """
+    Removes a card from the store.
+    """
+
+    # Remove one card from the store list
+    store[card_name] -= 1
+
+    if (store[card_name] == 0):
+        print("This was the last card of this type: There are none left.")
+
+def gift_card(p: Player, card_name: str, cd, store, pile: str=None) -> None:
+    """
+    Gifts a player a certain card. 
+    """
+    if pile is None:
+        pile = "discard" 
+
+    # Card doesn't exist in the store
+    if card_name not in store:
+        print("This card doesn't exist in the store!")
+
+    # Card has 0 left in the store
+    elif store[card_name] == 0:
+        print("There are no more copies left of this card.")
+
+    else:
+        print("Received card:", card_name)
+
+        card = load_card(card_name, cd)
+
+        # Add card to deck
+        p.deck.append(card)
+
+        # Decide where to add the card
+        if pile == "hand":
+            p.current_hand.append(card)
+        elif pile == "draw":
+            p.drawpile.append(card)
+        else: 
+            p.discardpile.append(card)
+
+        remove_card(p, card_name, cd, store)
 
 def routine(p: Player, s: dict, cd) -> None:
     """
