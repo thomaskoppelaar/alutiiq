@@ -20,7 +20,7 @@
         - [ ] Function
     - [X] Mine
         - [X] Trash a money card, gain one quality higher
-        - [ ] Allow player to input a card name
+        - [X] Allow player to input a card name
     - [X] Gold
         - [X] Worth 3 coin
     - [X] Bandit
