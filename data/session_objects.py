@@ -3,10 +3,12 @@
 Store = {
     "silver coin": 10,
     "gold coin": 6,
+    "platinum coin": 2,
     "land": 10,
-    "festival": 3,
+    "festival": 4,
     "smithy": 5,
     "mine": 2,
+    "bandit": 3,
     "castle": 1
 }
 

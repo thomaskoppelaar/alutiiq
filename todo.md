@@ -24,7 +24,7 @@
     - [X] Gold
         - [X] Worth 3 coin
     - [X] Bandit
-        -  [ ] Gain 1 gold card
+        -  [X] Gain 1 gold card
 - [ ] Feature: Add emphasis and color to text.
 - [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
 - [ ] Enhancement - actions/information: Have the description of a card shown when it is played.

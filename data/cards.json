@@ -65,7 +65,7 @@
 
     "castle": {
         "name": "castle",
-        "cost": 8,
+        "cost": 12,
         "cardtype": "point",
         "description": "Worth 6 points at the end of a game.",
         "value": 6
