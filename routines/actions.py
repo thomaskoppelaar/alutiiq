@@ -67,8 +67,7 @@ def perform_action(p: Player, s: dict, cd: dict, card_name: str) -> None:
                     p.actions_left -= 1
 
                     # Move card from hand onto discard pile
-                    p.current_hand.remove(card)
-                    p.discardpile.append(card)
+                    p.card_played(card)
                 
                 p.show_hand_cards()
                

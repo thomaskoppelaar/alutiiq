@@ -28,6 +28,7 @@ def end_turn(p: Player) -> None:
             print("Turns taken:", session_objects.Turn_counter)
             exit(0)
 
+    p.played_cards_to_discard()
     
     # Put all remaining cards in hard onto the discard pile
     print("Putting hand cards in discard pile...")

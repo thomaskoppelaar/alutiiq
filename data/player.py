@@ -16,6 +16,9 @@ class Player:
     # List containing all cards the player is currently holding.
     current_hand: [Card] = []
 
+    # List containing all cards the player has played in a turn.
+    cards_played: [Card] = []
+
     purchases_left: int = 0
     actions_left: int = 0
 
@@ -25,6 +28,21 @@ class Player:
     bonus_coins: int = 0
 
     amount_spent: int = 0
+
+    def card_played(self, card: Card) -> None:
+        """
+        Puts a card into a temporary pile, that gets cleared at the end of a player's turn.
+        Ensures that the same card cannot be played twice within a turn.
+        """
+        self.current_hand.remove(card)
+        self.cards_played.append(card)
+
+    def played_cards_to_discard(self) -> None:
+        """
+        Put the player's played cards into their discard pile.
+        """
+        while self.cards_played:
+            self.discardpile.append(self.cards_played.pop())
 
     def discard_to_draw(self) -> None:
         """
