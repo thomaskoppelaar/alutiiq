@@ -18,3 +18,5 @@ Turn_counter = 0
 Game_mode = "castle race"
 
 Trashpile = []
+
+Game_version = "0.2.1"

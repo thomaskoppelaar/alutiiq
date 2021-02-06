@@ -24,7 +24,7 @@
 |                         |                                                    |                                                 |
 +-------------------------+                                                    +-----------------------+-------------------------+
 |                         |                                                    |  List of controls     |  E - End turn           |
-|    Your input(? maybe?) |                                                    |  A - Play action card |                         |
-|    _______________      |                                                    |  H - Show your hand   |                         |
+|    Your input:          |                                                    |  A - Play action card |  Q - Quit game          |
+|    _______________      |                                                    |  H - Show your hand   |  I - Information        |
 |                         |                                                    |  S - Go to the store  |                         |
 +-------------------------+----------------------------------------------------+-----------------------+-------------------------+
