@@ -1,4 +1,4 @@
-[ ] = Open, [~] = being worked on, [X] = done, [?] = stuck
+[ ] = Open, [~] = being worked on, [X] = done, [?] = stuck [-] = discarded
 
 - [X] Feature: Information option in turn
 - [X] Enhancement - actions: Allow player to pick a number rather than having to type the full action card
@@ -7,7 +7,27 @@
      - Wanted result: `from data import Player`
 - [X] Docs: Write out how the game works, what the rules are, and what a turn consists of
 - [X] Feature - Turns: Keep track of which turn it is
-- [~] Interface - more player-friendly.
+
+- [~] Feature - Interface: Use curses.
+    - [X] Mockup (see mockup.md)
+    - [X] Get some window working
+    - [X] Have different columns with different information
+    - [ ] Calibration routine
+         - [ ] Before player starts the game, check the window size.
+            - [ ] If the screen is big enough, start the game.
+            - [ ] Otherwise, go into a routine where the player can resize their screen until they see all of the corners
+    - [ ] User input
+        - [ ] Don't process incorrect input
+        - [ ] Quit command
+        - [ ] End turn command
+    - [ ] Turn counter
+        - [ ] Note what character space it has
+        - [ ] String formatting so it stays the correct size
+        - [ ] Method for updating the turn counter
+
+    - [ ] Test on Windows OS
+
+- [ ] Interface - more player-friendly.
     - [X] Show how many actions the player has left.
     - [X] Show card type in the information screen and the store.
     - [X] Show card description in the action screen.
@@ -27,15 +47,15 @@
         -  [X] Gain 1 gold card
     - [X] Village
         -  [X] +2 actions, +1 card
-- [ ] Bug: Add a temporary discard pile so that turns cannot be infinite
-    - [ ] Whenever an action card gets played, it should be put on a temporary pile, rather than the discard pile
-    - [ ] Otherwise, drawing your entire deck and looping through festival + mine + smithy + village is infinite
+- [X] Bug: Add a temporary discard pile so that turns cannot be infinite
+    - [X] Whenever an action card gets played, it should be put on a temporary pile, rather than the discard pile
+    - [X] Otherwise, drawing your entire deck and looping through festival + mine + smithy + village is infinite
 - [ ] Feature: Add emphasis and color to text.
-- [ ] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
-- [ ] Enhancement - actions/information: Have the description of a card shown when it is played.
-    - [ ] When viewing the information of a card, show the name and the description.
-    - [ ] Perhaps pick a random adjective as well, for fun? E.g. "A humble/simple/cruddy/shoddy building."
-    - [ ] When playing an action, the new description (stating what it does) gets printed
+- [X] Enhancement - actions: When an action is played, show how much actions/cards/money has been gained.
+- [X] Enhancement - actions/information: Have the description of a card shown when it is played.
+    - [X] When viewing the information of a card, show the name and the description.
+    - [-] Perhaps pick a random adjective as well, for fun? E.g. "A humble/simple/cruddy/shoddy building."
+    - [X] When playing an action, the new description (stating what it does) gets printed
 - [~] Feature - Gamemodes:
     - [~] Racing mode: Try and buy a castle in as little turns as is possible
         - [X] Keep track of turns
@@ -44,10 +64,11 @@
         - [ ] Start screen
         - [ ] A "restart" option
     - [ ] Countdown mode: Get as much points as possible in X amount of turns
-- [ ] Refactor - Interface: Have a generic method for choosing cards out of a list
-    - [ ] Method takes in a list of choices, and outputs a string
-    - [ ] Options for displaying certain information:
-        - [ ] Description
-        - [ ] Card type
-        - [ ] Cost
-    - [ ] Minimum and maximum amount of choices
+- [X] Refactor - Interface: Have a generic method for choosing cards out of a list
+    - [X] Method takes in a list of choices, and outputs a string
+    - [X] Options for displaying certain information:
+        - [X] Description
+        - [X] Card type
+        - [X] Cost
+    - [X] Minimum and maximum amount of choices
+        - [ ] For multiple choices, check for duplicate cards.
