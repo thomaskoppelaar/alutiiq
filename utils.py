@@ -2,7 +2,7 @@ import os
 import json
 from types import SimpleNamespace
 
-from data import Card
+from data import Card, session_objects
 
 # Load card data
 f = open("data/cards.json", "r")
@@ -15,7 +15,6 @@ del(f)
 def clear_screen():
     os.system('cls' if os.name=='nt' else 'clear')
 
-
 # (Boilerplate) Load a json dict into an object
 def load_card(card_name: str, card_data: [dict]) -> Card:
     """
@@ -25,25 +24,7 @@ def load_card(card_name: str, card_data: [dict]) -> Card:
     card_string = json.dumps(card_data[card_name])
     card_obj = json.loads(card_string, object_hook=Card)
     return card_obj
-def show_cards(cards: [str], cd, show_description: bool = False, show_type: bool = False, show_cost: bool = False) -> None:
 
-    if len(cards) == 0:
-        print("No available cards!")
-        return
-    
-    i = 1
-    for card_name in cards:
-        card = load_card(card_name, cd)
-        if show_type:
-            print("  {0}. {1} ({2})".format(i, card.name, card.cardtype))
-        else:
-            print("  {0}. {1}".format(i, card.name))
-        if show_cost:
-            print("    - Costs: ${0}".format(card.cost))
-        if show_description:
-            print("    - {0}".format(card.description))
-            print()
-        i += 1
 def card_selection(choices: [str], cd) -> Card:
     cards = cards_selection(choices, cd, min=1, max=1)
 
@@ -102,3 +83,18 @@ def cards_selection(choices: [str], cd, min: int = 1, max: int = 1) -> [Card]:
                         continue
             clear_screen()
             return res
+
+def get_turns() -> int:
+    return session_objects.Turn_counter
+
+def get_game_mode() -> str:
+    return session_objects.Game_mode
+
+def get_game_version() -> str:
+    return session_objects.Game_version
+
+def stub() -> None:
+    return
+
+def get_point_total() -> str:
+    return "WIP"

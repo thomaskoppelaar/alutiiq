@@ -1,6 +1,6 @@
 # Action cards probably deserve their own little file
 from data import Player, Card
-from utils import clear_screen, load_card, show_cards, card_selection
+from utils import clear_screen, load_card, card_selection
 from routines import store
 
 def routine(p: Player, s: dict, cd: dict) -> None:
@@ -17,7 +17,7 @@ def routine(p: Player, s: dict, cd: dict) -> None:
         return
 
     print("Which action do you want to play?")
-    show_cards(action_cards, cd, show_description=True)
+    # show_cards(action_cards, cd, show_description=True)
     
     card: Card = card_selection(action_cards, cd)
     
@@ -81,7 +81,7 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
 
     print("Which card do you want to upgrade?")
 
-    show_cards(list(money_cards.keys()), cd)
+    # show_cards(list(money_cards.keys()), cd)
         
     chosen_card = card_selection(list(money_cards.keys()), cd)
     

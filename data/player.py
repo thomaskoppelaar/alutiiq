@@ -130,21 +130,29 @@ class Player:
 
             print("Can't remove this card!") 
 
-    def show_hand_cards(self) -> None:
+    def get_hand_cards(self) -> [str]:
         """
-        Prints the players' cards that are in his hands.
-        Also prints the hand value.
+        Gets a printable version of the player's hand cards.
         """
+
+        # First, get a set of the player's cards, and count how many they have of each card.
         card_set = {}
-        print("Current cards in hand:")
         for card in self.current_hand:
             card_set[card.name] = card_set.get(card.name, 0) + 1
 
+        # Then, format strings in a list in the way they should be displayed.
+        res = []
         for card in card_set:
-            print("  - {0} - (x{1})".format(card, sum([1 for i in self.current_hand if i.name == card])))
+            
+            # Card name, padded with strings to be 15 characters long
+            string = "- {0}".format(card)
+            string = string.ljust(15, " ")
 
-        print("Total money in hand:", self.get_hand_value())
-        print("Money gained through actions:", self.bonus_coins)
+            # Card count, padded with strings to be 3 characters long
+            string += " x{0}".format(sum([1 for i in self.current_hand if i.name == card])).rjust(4, " ")
+            res.append(string)
+
+        return res
 
     def get_hand_value(self) -> int:
         """

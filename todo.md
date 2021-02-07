@@ -12,19 +12,33 @@
     - [X] Mockup (see mockup.md)
     - [X] Get some window working
     - [X] Have different columns with different information
-    - [ ] Calibration routine
-         - [ ] Before player starts the game, check the window size.
-            - [ ] If the screen is big enough, start the game.
-            - [ ] Otherwise, go into a routine where the player can resize their screen until they see all of the corners
-    - [ ] User input
-        - [ ] Don't process incorrect input
-        - [ ] Quit command
-        - [ ] End turn command
-    - [ ] Turn counter
-        - [ ] Note what character space it has
-        - [ ] String formatting so it stays the correct size
-        - [ ] Method for updating the turn counter
-
+    - [X] Calibration routine
+         - [X] Before player starts the game, check the window size.
+            - [X] If the screen is big enough, start the game.
+            - [X] Otherwise, go into a routine where the player can resize their screen until they see all of the corners
+    - [X] User input
+        - [X] Don't process incorrect input
+            - [X] User can delete
+            - [X] What happens when the player types in more than 17 characters?
+                - They get limited by curses. Bless
+        - [X] Quit command
+        - [X] End turn command
+    - [X] Turn counter
+        - [X] Note what character space it has
+        - [X] String formatting so it stays the correct size
+        - [X] Method for updating the turn counter
+    - [X] Show store
+    - [ ] Text scrolling
+        - [ ] Main content needs a way to be able to scroll using the up/down keys
+        - [ ] I guess the most simple sacrifice to make would be to butcher the retrieve_user_input function
+            - [ ] Enter should return the full input
+            - [ ] Left_key goes back one place, Right_key one forward
+            - [ ] You can't go off of the 17 characters input place
+            - [ ] Backspace should delete the 
+        - [ ] And make a function for going through the main content
+            - [ ] Which means keeping track of the main content
+            - [ ] And keeping track of which page is currently being displayed
+            - [ ] And displaying a new page whenever the `[` or `]` key is pressed.
     - [ ] Test on Windows OS
 
 - [ ] Interface - more player-friendly.
@@ -32,6 +46,9 @@
     - [X] Show card type in the information screen and the store.
     - [X] Show card description in the action screen.
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
+        - [ ] Make a new tutorial routine, which shows a bunch of cards on the screen talking about the different elements of the game.
+
+- [ ] Bug - Interface: Interface crashes on resize of main game
 - [~] Feature - Cards: new cards
     - [ ] Chapel
         - [X] Requires working trashpile

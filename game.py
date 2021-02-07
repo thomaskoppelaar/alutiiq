@@ -53,13 +53,24 @@ screen.init_screen(main_screen)
 screen.calibration_routine(main_screen)
 screen.display_main(main_screen)
 
+turns.start_turn(mainguy)
+
+
 # Wait for some input
 c = ""
 while c != "q":
+
     screen.update_dynamic_values(main_screen)
-    main_screen.move(screen.dv["userinput"][0], screen.dv["userinput"][1])
-    c = main_screen.getkey()
-    
+    screen.update_hand_card(main_screen, mainguy)
+
+    c = screen.retrieve_user_input(main_screen)
+
+    if (c == "e"):
+        turns.end_turn(mainguy)
+        turns.start_turn(mainguy)
+    elif (c == "s"):
+        store.routine(mainguy, Store, card_data)
+
 
 screen.end_screen(main_screen)
 
