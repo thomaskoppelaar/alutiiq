@@ -1,7 +1,8 @@
 from data import Player, Card
 from utils import load_card, clear_screen, card_selection
 from content_format import format_cards
-from screen import regions, show_main_content
+from screen import Screen
+from screen import maincontent
 
 def purchase_card(p: Player, card_name, cd, store) -> None:
     """
@@ -84,20 +85,17 @@ def gift_card(p: Player, card_name: str, cd, store, pile: str=None) -> None:
 
         remove_card(p, card_name, cd, store)
 
-def routine(p: Player, s: dict, cd) -> None:
+def routine(scr: Screen, p: Player, s: dict, cd) -> None:
     """
     Store routine. Allows player to view and buy cards.
     """
 
-    # Get width of the main content
-    width = regions["maincontent"][1]
-
     content: [str] = []
-    content.append("=#= Welcome to the store! =#=".center(width, " "))
+    content.append("=#= Welcome to the store! =#=".center(maincontent.width, " "))
     content.append("Any bought item will go onto your discard pile.")
     content.append("Items for sale:")
     
-    content = content + format_cards(list(s.keys()), cd, width, show_description=True, show_type=True, show_cost=True)
+    content = content + format_cards(list(s.keys()), cd, maincontent.width, show_description=True, show_type=True, show_cost=True)
 
     content.append("You have: {0} (+{1}) - {2} = ${3} left."
         .format(
@@ -107,9 +105,9 @@ def routine(p: Player, s: dict, cd) -> None:
             p.current_hand_balance + p.bonus_coins - p.amount_spent
         )
     )
-    content.append("Purchases left: {0}".format(p.purchases_left))
+    
 
-    show_main_content(content)
+    scr.show_main_content(content)
 
     # card: Card = card_selection(list(s.keys()), cd)
 

@@ -4,7 +4,7 @@ import curses
 from utils import load_card, clear_screen, card_data
 from data import Player, Store, session_objects
 from routines import actions, store, turns, information
-import screen
+from screen import Screen
 
 
 def start_new_game(p: Player, cd) -> None:
@@ -48,10 +48,10 @@ mainguy = Player()
 start_new_game(mainguy, card_data)
 
 # Create screen
-main_screen = curses.initscr()
-screen.init_screen(main_screen)
-screen.calibration_routine(main_screen)
-screen.display_main(main_screen)
+main_screen = Screen()
+main_screen.init_screen()
+main_screen.calibration_routine()
+main_screen.display_main()
 
 turns.start_turn(mainguy)
 
@@ -60,19 +60,19 @@ turns.start_turn(mainguy)
 c = ""
 while c != "q":
 
-    screen.update_dynamic_values(main_screen)
-    screen.update_hand_card(main_screen, mainguy)
+    main_screen.update_dynamic_values(mainguy)
+    main_screen.update_hand_card(mainguy)
 
-    c = screen.retrieve_user_input(main_screen)
+    c = main_screen.retrieve_user_input()
 
     if (c == "e"):
         turns.end_turn(mainguy)
         turns.start_turn(mainguy)
     elif (c == "s"):
-        store.routine(mainguy, Store, card_data)
+        store.routine(main_screen, mainguy, Store, card_data)
 
 
-screen.end_screen(main_screen)
+main_screen.end_screen()
 
 # while 1:
 #     turns.start_turn(mainguy)

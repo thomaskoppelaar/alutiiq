@@ -8,7 +8,7 @@
 - [X] Docs: Write out how the game works, what the rules are, and what a turn consists of
 - [X] Feature - Turns: Keep track of which turn it is
 
-- [~] Feature - Interface: Use curses.
+- [X] Feature - Interface: Use curses.
     - [X] Mockup (see mockup.md)
     - [X] Get some window working
     - [X] Have different columns with different information
@@ -28,19 +28,33 @@
         - [X] String formatting so it stays the correct size
         - [X] Method for updating the turn counter
     - [X] Show store
-    - [ ] Text scrolling
-        - [ ] Main content needs a way to be able to scroll using the up/down keys
-        - [ ] I guess the most simple sacrifice to make would be to butcher the retrieve_user_input function
-            - [ ] Enter should return the full input
-            - [ ] Left_key goes back one place, Right_key one forward
-            - [ ] You can't go off of the 17 characters input place
-            - [ ] Backspace should delete the 
-        - [ ] And make a function for going through the main content
-            - [ ] Which means keeping track of the main content
-            - [ ] And keeping track of which page is currently being displayed
-            - [ ] And displaying a new page whenever the `[` or `]` key is pressed.
+    - [~] Text scrolling
+        - [~] Before sacrifices are made: try out pads
+        - [X] Main content needs a way to be able to scroll using the up/down keys
+            - [X] Keep track of upmost line
+            - [X] Scrolling up / down functions
+        - [X] I guess the most simple sacrifice to make would be to butcher the retrieve_user_input function
+            - [X] Enter should return the full input
+            - [X] Left_key goes back one place, Right_key one forward
+            - [X] You can't go off of the 17 characters input place
+            - [X] Backspace should delete the last character that was added
+        - [-] And make a function for going through the main content
+            - [-] Which means keeping track of the main content
+            - [-] And keeping track of which page is currently being displayed
+            - [-] And displaying a new page whenever the `[` or `]` key is pressed.
     - [ ] Test on Windows OS
 
+
+- [ ] Feature - History
+    - [ ] Screen should have a history region
+    - [ ] Screen should have a method for clearing history.
+    - [ ] The player's {...} should be shown in the history tab
+        - [ ] Gained bonuses
+        - [ ] Drawn cards
+        - [ ] Bought cards
+        - [ ] Played cards
+    - [ ] At the start of a turn, the history should be cleared.
+    - [ ] The history panel should automatically scroll once new items appear.
 - [ ] Interface - more player-friendly.
     - [X] Show how many actions the player has left.
     - [X] Show card type in the information screen and the store.
@@ -48,7 +62,11 @@
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
         - [ ] Make a new tutorial routine, which shows a bunch of cards on the screen talking about the different elements of the game.
 
+- [ ] Bug - Store: Add back store functionality
 - [ ] Bug - Interface: Interface crashes on resize of main game
+- [ ] Bug - User input: If the input space is full, and the user presses delete, a "?" will remain on screen.
+
+-
 - [~] Feature - Cards: new cards
     - [ ] Chapel
         - [X] Requires working trashpile
