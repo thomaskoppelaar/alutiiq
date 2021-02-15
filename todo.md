@@ -72,8 +72,9 @@
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
         - [ ] Make a new tutorial routine, which shows a bunch of cards on the screen talking about the different elements of the game.
 
-- [X] Bug - Store: Add back store functionality
-- [ ] Feature - Main screen: Show hand cards in the main panel (with description) when not in the store
+- [~] Bug - Store: Add back store functionality
+    - [X] When you have insufficient funds, you should still be able to purchase a card afterwards, rather than being kicked out of the store
+- [X] Feature - Main screen: Show hand cards in the main panel (with description) when not in the store
 
 - [ ] Feature - Actions: Card selection should be possible
     - [ ] Card selection should show in the main panel
@@ -85,6 +86,11 @@
         - [ ] When selecting a different card, the previous selection should not be selected anymore
     - [ ] Multiple cards
         - [ ] Show the user how many cards they have to select
+
+- [ ] Feature: Current turn overview
+     - [ ] Money in hand
+     - [ ] Actions left
+     - [ ] When any value is 0, display as red, else green
 
 === Version 0.4 ===
 

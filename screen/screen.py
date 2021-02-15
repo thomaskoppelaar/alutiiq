@@ -92,10 +92,10 @@ class Screen:
 
         self.handcard.refresh()
 
-    def update_dynamic_values(self, hand_value: int) -> None:
+    def update_dynamic_values(self, deck_value: int) -> None:
 
         self.screen.addstr(turncounter.y, turncounter.x, str(Turn_counter).rjust(turncounter.width, " "))
-        self.screen.addstr(pointtotal.y, pointtotal.x, str(hand_value).rjust(pointtotal.width, " "))
+        self.screen.addstr(pointtotal.y, pointtotal.x, str(deck_value).rjust(pointtotal.width, " "))
 
         
         # Refresh the screen
@@ -164,17 +164,22 @@ class Screen:
                     if len(res) >= userinput.width:
                         res[index] = chr(c)
                     else:
-                        res.insert(index, chr(c))
+                        
+                        # Only add to input arr if in this string
+                        if (chr(c) in "abcdefghijklmnopqrstuvwxyz1234567890 "):
+                            res.insert(index, chr(c))
 
-                    # Get the new index
-                    index = min(userinput.width - 1, index + 1)
+                            # Get the new index
+                            index = min(userinput.width - 1, index + 1)
                 
                 except ValueError:
                     pass
 
 
-            # Print new string
-            self.screen.addstr(userinput.y, userinput.x, "".join(res).ljust(userinput.width, "_"))
+            # Print new string, and clear one character more in case some odd character is printed
+            # e.g. when deleting the last character, "^?" gets printed making "?" appear right beside the input
+            # where the user can't get to it
+            self.screen.addstr(userinput.y, userinput.x, "".join(res).ljust(userinput.width, "_") + " ")
 
             # Move cursor back to index, as addstr moves it
             self.screen.move(userinput.y, userinput.x + index)
@@ -235,9 +240,8 @@ class Screen:
         self.mcwin.clear()
         self.mcwin.refresh()
 
-    def show_main_content(self, content: [str]) -> None:
+    def show_main_content(self, content: []) -> None:
 
-        
 
         self.mc_content = content
         self.mc_linepos = 0
@@ -248,14 +252,18 @@ class Screen:
 
         i = 0
         for line in content:
-        
-            self.mcwin.addstr(i, 0, line)
+
+            # if a color is provided
+            if isinstance(line, tuple):
+                self.mcwin.addstr(i, 0, line[0], curses.color_pair(line[1]))
+            else:
+                self.mcwin.addstr(i, 0, line)
             i += 1
         self.mcwin.refresh(0, 0, mc.y, mc.x, mc.y + mc.height, mc.x + mc.width)
 
     def clear_history(self) -> None:
         
-        # Empty content arrayz
+        # Empty content array
         self.hist_content = []
         
         # Make window over the history content region, and clear it

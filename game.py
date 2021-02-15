@@ -4,7 +4,8 @@ import curses
 from utils import load_card, clear_screen, card_data
 from data import Player, Store, session_objects
 from routines import actions, store, turns, information
-from screen import Screen
+from screen import Screen, maincontent
+from format_cards import format_cards
 
 
 def start_new_game(p: Player, scr, cd) -> None:
@@ -57,9 +58,18 @@ c = ""
 while c != "q":
     main_screen.move_cursor_to_userinput()
 
-    main_screen.update_dynamic_values(mainguy.get_hand_value())
+    main_screen.update_dynamic_values(mainguy.get_deck_score())
     main_screen.update_hand_card(mainguy.get_hand_cards())
 
+    card_set = {}
+    for card in mainguy.current_hand:
+        card_set[card.name] = card_set.get(card.name, 0) + 1
+
+    main_screen.show_main_content(
+        format_cards([card for card in card_set.keys()], card_data, maincontent.width
+        , show_description=True, show_type=True
+        )
+    )
     c = main_screen.retrieve_user_input().lower()
 
     if (c == "e"):

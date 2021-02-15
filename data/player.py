@@ -177,6 +177,7 @@ class Player:
             # Check if the card actually counts towards the final points
             if "point" in card.cardtype:
                 res += card.value
+        return res
 
     def add_actions(self, i: int) -> None:
        """

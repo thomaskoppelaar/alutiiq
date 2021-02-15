@@ -1,10 +1,10 @@
 from data import Player, Card
-from utils import load_card, clear_screen, card_selection
+from utils import load_card, clear_screen, input_card_selection
 from format_cards import format_cards
 from screen import Screen
 from screen import maincontent
 
-def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> None:
+def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> bool:
     """
     The transaction method. Buys a card for a player using their balance.
     The purchased card gets taken out of the shop, and placed into the player's discard pile.
@@ -12,14 +12,17 @@ def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> None:
     # Card doesn't exist in the store
     if card_name not in store:
         scr.log("This card doesn't exist in the store!")
+        return False
 
     # Card has 0 left in the store
     elif store[card_name] == 0:
         scr.log("This card cannot be bought anymore!")
+        return False
 
     # Player can't purchase any more cards
     elif p.purchases_left == 0:
         scr.log("You can't buy any more cards this turn!")
+        return False
 
     else:
         # Load in the card
@@ -27,7 +30,7 @@ def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> None:
 
         if card_bought.cost > (p.current_hand_balance + p.bonus_coins - p.amount_spent):
             scr.log("Insufficient funds!", 2)
-            return
+            return False
         
         # Confirm purchase
         p.purchases_left -= 1
@@ -39,7 +42,7 @@ def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> None:
         # Subtract cost from balance
         p.amount_spent += card_bought.cost
 
-         
+        return True
 
 
 def remove_card(p: Player, card_name: str, cd, store) -> None:
@@ -90,8 +93,8 @@ def routine(scr: Screen, p: Player, s: dict, cd) -> None:
     Store routine. Allows player to view and buy cards.
     """
 
-    content: [str] = []
-    content.append("=#= Welcome to the store! =#=".center(maincontent.width, " "))
+    content: [] = []
+    content.append(("=#= Welcome to the store! =#=".center(maincontent.width, " "), 1))
     content.append("Any bought item will go onto your discard pile.")
     content.append("Items for sale:")
     
@@ -109,18 +112,21 @@ def routine(scr: Screen, p: Player, s: dict, cd) -> None:
 
     scr.show_main_content(content)
 
-    card: Card = card_selection(list(s.keys()), cd, scr)
+    done = False
+    # while we're not done with buying something, stay in this loop.
+    while not done: 
+        card: Card = input_card_selection(list(s.keys()), cd, scr)
 
-    # Check if cards was picked
-    if card is None: 
-        # scr.clear_main_content()
-        return
+        # Check if cards was picked
+        if card is None: 
+            # scr.clear_main_content()
+            done = True
+            continue
 
-
-    if (p.purchases_left <= 0):
-        scr.log("You don't have any purchases left.")
-        return
+        if (p.purchases_left <= 0):
+            scr.log("You don't have any purchases left.")
+            continue
+        
+        done = purchase_card(p, card.name, cd, s, scr)
     
-    purchase_card(p, card.name, cd, s, scr)
-    # scr.clear_main_content()
-
+    scr.clear_main_content()

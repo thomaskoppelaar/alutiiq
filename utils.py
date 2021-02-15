@@ -26,8 +26,8 @@ def load_card(card_name: str, card_data: [dict]) -> Card:
     card_obj = json.loads(card_string, object_hook=Card)
     return card_obj
 
-def card_selection(choices: [str], cd, scr: Screen) -> Card:
-    cards = cards_selection(choices, cd, scr, min=1, max=1)
+def input_card_selection(choices: [str], cd, scr: Screen) -> Card:
+    cards = input_cards_selection(choices, cd, scr, min=1, max=1)
 
     # Happens when player cancels the selection.
     if len(cards) == 0:
@@ -35,10 +35,8 @@ def card_selection(choices: [str], cd, scr: Screen) -> Card:
     else:
         return cards[0]
 
-def cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: int = 1) -> [Card]:
+def input_cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: int = 1) -> [Card]:
 
-    scr.log("You can buy cards in the store by inputting the name of the card.")
-    
     # Ask the player for a choice
     player_choice = ""
     while 1:

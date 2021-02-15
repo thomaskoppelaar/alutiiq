@@ -3,7 +3,7 @@ import textwrap
 from utils import load_card, Card
 
 
-def format_cards(cards: [str], cd, w, show_description: bool = False, show_type: bool = False, show_cost: bool = False) -> [str]:
+def format_cards(cards: [str], cd, width, show_description: bool = False, show_type: bool = False, show_cost: bool = False) -> [str]:
     
     res = []
 
@@ -30,7 +30,7 @@ def format_cards(cards: [str], cd, w, show_description: bool = False, show_type:
         ))
         
         if show_description:
-            wrapper = textwrap.TextWrapper(width=w)
+            wrapper = textwrap.TextWrapper(width=width)
             res = res + wrapper.wrap("  - " + card.description)
 
             
