@@ -8,6 +8,7 @@
 - [X] Docs: Write out how the game works, what the rules are, and what a turn consists of
 - [X] Feature - Turns: Keep track of which turn it is
 
+=== Version 0.3 ===
 - [X] Feature - Interface: Use curses.
     - [X] Mockup (see mockup.md)
     - [X] Get some window working
@@ -28,8 +29,8 @@
         - [X] String formatting so it stays the correct size
         - [X] Method for updating the turn counter
     - [X] Show store
-    - [~] Text scrolling
-        - [~] Before sacrifices are made: try out pads
+    - [X] Text scrolling
+        - [X] Before sacrifices are made: try out pads
         - [X] Main content needs a way to be able to scroll using the up/down keys
             - [X] Keep track of upmost line
             - [X] Scrolling up / down functions
@@ -38,6 +39,8 @@
             - [X] Left_key goes back one place, Right_key one forward
             - [X] You can't go off of the 17 characters input place
             - [X] Backspace should delete the last character that was added
+            - [X] Moving right shouldn't allow you to move all the way to the end of the input
+                  rather, you should stick to the end of the word
         - [-] And make a function for going through the main content
             - [-] Which means keeping track of the main content
             - [-] And keeping track of which page is currently being displayed
@@ -46,15 +49,22 @@
 
 
 - [ ] Feature - History
-    - [ ] Screen should have a history region
-    - [ ] Screen should have a method for clearing history.
+    - [X] Screen should have a history region
+    - [X] Screen should have a method for clearing history.
     - [ ] The player's {...} should be shown in the history tab
         - [ ] Gained bonuses
         - [ ] Drawn cards
         - [ ] Bought cards
         - [ ] Played cards
-    - [ ] At the start of a turn, the history should be cleared.
-    - [ ] The history panel should automatically scroll once new items appear.
+    - [X] At the start of a turn, the history should be cleared.
+    - [X] The history panel should automatically scroll once new items appear.
+    - [~] Get feedback: How and when should history be cleared?
+        - [ ] Options are: on every turn,
+        - [ ] Never,
+        - [ ] Through a keybind (e.g. H),
+        - [ ] Or something else, namely: ...
+    - [ ] Add color options for logging
+    - [X] Remove dependency of Player object in screen.py
 - [ ] Interface - more player-friendly.
     - [X] Show how many actions the player has left.
     - [X] Show card type in the information screen and the store.
@@ -62,7 +72,22 @@
     - [ ] Documentation: Describe concepts of the game (e.g. discard pile, actions, etc)
         - [ ] Make a new tutorial routine, which shows a bunch of cards on the screen talking about the different elements of the game.
 
-- [ ] Bug - Store: Add back store functionality
+- [X] Bug - Store: Add back store functionality
+- [ ] Feature - Main screen: Show hand cards in the main panel (with description) when not in the store
+
+- [ ] Feature - Actions: Card selection should be possible
+    - [ ] Card selection should show in the main panel
+    - [ ] You should be able to select a single card and confirm your choice
+        - [ ] Select a card
+        - [ ] Deselect the same card
+        - [ ] A confirm button
+        - [ ] A cancel button
+        - [ ] When selecting a different card, the previous selection should not be selected anymore
+    - [ ] Multiple cards
+        - [ ] Show the user how many cards they have to select
+
+=== Version 0.4 ===
+
 - [ ] Bug - Interface: Interface crashes on resize of main game
 - [ ] Bug - User input: If the input space is full, and the user presses delete, a "?" will remain on screen.
 

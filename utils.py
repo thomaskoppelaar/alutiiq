@@ -3,6 +3,7 @@ import json
 from types import SimpleNamespace
 
 from data import Card, session_objects
+from screen import Screen
 
 # Load card data
 f = open("data/cards.json", "r")
@@ -25,8 +26,8 @@ def load_card(card_name: str, card_data: [dict]) -> Card:
     card_obj = json.loads(card_string, object_hook=Card)
     return card_obj
 
-def card_selection(choices: [str], cd) -> Card:
-    cards = cards_selection(choices, cd, min=1, max=1)
+def card_selection(choices: [str], cd, scr: Screen) -> Card:
+    cards = cards_selection(choices, cd, scr, min=1, max=1)
 
     # Happens when player cancels the selection.
     if len(cards) == 0:
@@ -34,31 +35,33 @@ def card_selection(choices: [str], cd) -> Card:
     else:
         return cards[0]
 
-def cards_selection(choices: [str], cd, min: int = 1, max: int = 1) -> [Card]:
+def cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: int = 1) -> [Card]:
 
+    scr.log("You can buy cards in the store by inputting the name of the card.")
+    
     # Ask the player for a choice
     player_choice = ""
     while 1:
-        print("For multiple inputs, separate the entries with a comma.")
-        player_choice = input("Your choice: (C to cancel) ")
+        
+        player_choice = scr.retrieve_user_input()
         player_choice = player_choice.lower()
         player_choice = player_choice.split(',')
         player_choice = [s.strip() for s in player_choice]
 
         if len(player_choice) == 0:
-            print("Enter an option.")
+            scr.log("Enter an option.")
             continue
 
         elif player_choice[0] == "c":
-            clear_screen()
-            print("Action cancelled.")
+            
+            scr.log("Action cancelled.")
             return []
 
         # Min / max checking
         elif len(player_choice) < min:
-            print("You need to pick at least {0} card(s).".format(min))
+            scr.log("You need to pick at least {0} card(s).".format(min))
         elif len(player_choice) > max:
-            print("You can only pick at most {0} card(s).".format(max))
+            scr.log("You can only pick at most {0} card(s).".format(max))
         # TODO: Duplicate card checking
 
         else:
@@ -71,19 +74,20 @@ def cards_selection(choices: [str], cd, min: int = 1, max: int = 1) -> [Card]:
                         card_name = choices[index]
                         res.append(load_card(card_name, cd))
                     except:
-                        print("Invalid number choice!")
+                        scr.log("Invalid number choice!")
                         res = []
-                        continue
+                        break
                 else:
                     try:
                         res.append(load_card(card_name, cd))
                     except:
-                        print("Invalid card choice!")
+                        scr.log("Invalid card choice!")
                         res = []
-                        continue
-            clear_screen()
-            return res
-
+                        break
+            if len(res) == 0:
+                continue
+            else:
+                return res
 def get_turns() -> int:
     return session_objects.Turn_counter
 

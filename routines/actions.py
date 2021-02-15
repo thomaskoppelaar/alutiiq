@@ -2,8 +2,9 @@
 from data import Player, Card
 from utils import clear_screen, load_card, card_selection
 from routines import store
+from screen import Screen
 
-def routine(p: Player, s: dict, cd: dict) -> None:
+def routine(p: Player, s: dict, cd: dict, scr: Screen) -> None:
     """
     Action routine. Allows player to play action cards.
     """
@@ -19,14 +20,14 @@ def routine(p: Player, s: dict, cd: dict) -> None:
     print("Which action do you want to play?")
     # show_cards(action_cards, cd, show_description=True)
     
-    card: Card = card_selection(action_cards, cd)
+    card: Card = card_selection(action_cards, cd, scr)
     
     if card is None: return
 
-    perform_action(p, s, cd, card.name)
+    perform_action(p, s, cd, card.name, scr)
    
 
-def perform_action(p: Player, s: dict, cd: dict, card_name: str) -> None:
+def perform_action(p: Player, s: dict, cd: dict, card_name: str, scr: Screen) -> None:
     """
     Plays a card in the player's hand.
     Once a card is successfully played, the card gets put on the player's discard pile.
@@ -49,26 +50,26 @@ def perform_action(p: Player, s: dict, cd: dict, card_name: str) -> None:
                 print("Action failed!")
 
 
-def magic_spell(p: Player, s: dict, cd: dict) -> bool:
+def magic_spell(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     p.draw_cards(2)
     return True
 
-def woodcutter(p: Player, s: dict, cd: dict) -> bool:
+def woodcutter(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     p.add_money(2)
     p.add_purchases(1)
     return True
 
-def smithy(p: Player, s: dict, cd: dict) -> bool:
+def smithy(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     p.draw_cards(3)
     return True
 
-def festival(p: Player, s: dict, cd: dict) -> bool:
+def festival(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     p.add_actions(2)
     p.add_purchases(1)
     p.add_money(2)
     return True
 
-def mine(p: Player, s: dict, cd: dict) -> bool:
+def mine(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     money_cards = {}
     for card in p.current_hand:
         if "money" in card.cardtype:
@@ -79,11 +80,11 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
         return False
 
 
-    print("Which card do you want to upgrade?")
+    scr.log("Which card do you want to upgrade?")
 
     # show_cards(list(money_cards.keys()), cd)
         
-    chosen_card = card_selection(list(money_cards.keys()), cd)
+    chosen_card = card_selection(list(money_cards.keys()), cd, scr)
     
     if chosen_card is None: return
 
@@ -91,30 +92,30 @@ def mine(p: Player, s: dict, cd: dict) -> bool:
 
     clear_screen()
     if card_name == "platinum coin":
-        print("Sorry, the fun stops here.")
+        scr.log("Sorry, the fun stops here.")
         return False
     elif card_name == "gold coin":
         p.trash_hand_card(money_cards[card_name])
         secret_card = load_card("platinum coin", cd)
-        print("That's some incredible value right there!")
+        scr.log("That's some incredible value right there!")
         p.add_hand_card(secret_card)
         return True
     elif card_name == "silver coin":
         p.trash_hand_card(money_cards[card_name])
         store.gift_card(p, "gold coin", cd, s, pile="hand")
-        print("Upgraded a silver to a gold coin.")
+        scr.log("Upgraded a silver to a gold coin.")
         return True
     elif card_name == "copper coin":
         p.trash_hand_card(money_cards[card_name])
         store.gift_card(p, "silver coin", cd, s, pile="hand")
-        print("Upgraded a copper to a silver coin.")
+        scr.log("Upgraded a copper to a silver coin.")
         return True
 
-def bandit_sp(p: Player, s: dict, cd: dict) -> bool:
+def bandit_sp(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     store.gift_card(p, "gold coin", cd, s, pile="discard")
     return True
 
-def village(p: Player, s: dict, cd: dict) -> bool:
+def village(p: Player, s: dict, cd: dict, scr: Screen) -> bool:
     p.add_actions(2)
-    p.draw_cards(1)
+    p.draw_cards(1, scr)
     return True

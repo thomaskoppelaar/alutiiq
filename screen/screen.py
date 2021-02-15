@@ -1,12 +1,11 @@
 # Heavy WIP
 import curses
+import textwrap
 
-from utils import get_game_mode, get_game_version, get_turns, get_point_total, stub
-from data import Player, Card
+from data import Card
 from screen.regions import Region, turncounter, gameversion, gamemode, pointtotal
-from screen.regions import handcards, userinput, maincontent
+from screen.regions import handcards, userinput, maincontent, history
 from data.session_objects import Turn_counter, Game_mode, Game_version
-
 
 # Screen requirements
 minimum_width = 130
@@ -16,17 +15,17 @@ class Screen:
 
     screen = None
     mcwin = None
-    hcwin = None
+    handcard = None
+    hist = None
 
     mc_content: [str] = []
     mc_linepos: int = 0
     
+    hist_content: [str] = []
+
 
     def __init__(self):
         self.screen = curses.initscr()
-
-
-
 
     def init_screen(self) -> None:
 
@@ -37,8 +36,6 @@ class Screen:
 
         curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
         # /CURSES INIT
-
-
 
     def load_interface_from_file(self, filename: str) -> None:
         
@@ -69,35 +66,35 @@ class Screen:
                 self.load_interface_from_file("data/screens/calibration-screen.md")
                 c = self.screen.getkey()
 
-
     def display_main(self) -> None:
 
         self.load_interface_from_file("data/screens/main-screen.md")
+        self.clear_main_content()
+        self.clear_history()
 
         self.screen.addstr(gamemode.y, gamemode.x, Game_mode.rjust(gamemode.width, " "))
         self.screen.addstr(gameversion.y, gameversion.x, Game_version.rjust(gameversion.width, " "))
-
+        self.hist = curses.newpad(history.height, history.width)
         self.screen.move(27, 5)
-    
 
-    def update_hand_card(self, p: Player) -> None:
+    def update_hand_card(self, cards: [str]) -> None:
 
 
-        self.hcwin = curses.newwin(handcards.height, handcards.width, handcards.y, handcards.x)
+        self.handcard = curses.newwin(handcards.height, handcards.width, handcards.y, handcards.x)
 
-        self.hcwin.clear()
+        self.handcard.clear()
 
         i = 0
-        for line in p.get_hand_cards():
-            self.hcwin.addstr(i, 0, line)
+        for line in cards:
+            self.handcard.addstr(i, 0, line)
             i += 1 
 
-        self.hcwin.refresh()
+        self.handcard.refresh()
 
-    def update_dynamic_values(self, p: Player) -> None:
+    def update_dynamic_values(self, hand_value: int) -> None:
 
         self.screen.addstr(turncounter.y, turncounter.x, str(Turn_counter).rjust(turncounter.width, " "))
-        self.screen.addstr(pointtotal.y, pointtotal.x, str(p.get_hand_value()).rjust(pointtotal.width, " "))
+        self.screen.addstr(pointtotal.y, pointtotal.x, str(hand_value).rjust(pointtotal.width, " "))
 
         
         # Refresh the screen
@@ -138,7 +135,7 @@ class Screen:
             elif c == curses.KEY_RIGHT:
 
                 # Make sure we don't leave the designated space
-                index = min(userinput.width - 1, index + 1)
+                index = min(len(res), index + 1)
 
                 # Move the cursor accordingly
                 self.screen.move(userinput.y, userinput.x + index)
@@ -217,9 +214,6 @@ class Screen:
         self.mc_linepos = min(self.mc_linepos + 1, len(self.mc_content) - mc.height - 1)
         self.mcwin.refresh(self.mc_linepos, 0, mc.y, mc.x, mc.y + mc.height, mc.x + mc.width)
 
-    def stub(self):
-        return
-
     def move_cursor_to_userinput(self) -> None:
         """
         Moves the cursor to where the user input starts.
@@ -227,13 +221,18 @@ class Screen:
 
         self.screen.move(userinput.y, userinput.x)
 
-
     def end_screen(self) -> None:
         
         self.screen.keypad(False)
         curses.flushinp()
-        curses.endwin()
-    
+        curses.endwin()  
+
+    def clear_main_content(self) -> None:
+        self.mc_content = []
+        self.mc_linepos = 0
+        self.mcwin = curses.newwin(maincontent.height + 1, maincontent.width, maincontent.y, maincontent.x)
+        self.mcwin.clear()
+        self.mcwin.refresh()
 
     def show_main_content(self, content: [str]) -> None:
 
@@ -252,3 +251,33 @@ class Screen:
             self.mcwin.addstr(i, 0, line)
             i += 1
         self.mcwin.refresh(0, 0, mc.y, mc.x, mc.y + mc.height, mc.x + mc.width)
+
+    def clear_history(self) -> None:
+        
+        # Empty content arrayz
+        self.hist_content = []
+        
+        # Make window over the history content region, and clear it
+        self.hist = curses.newwin(history.height, history.width, history.y, history.x)
+        self.hist.clear()
+        self.hist.refresh()
+
+    def log(self, message: str, color: int=0) -> None:
+        """
+        Logs a message to the history window.
+        """
+
+        # Format message
+        wrapper  = textwrap.TextWrapper(width= history.width)
+        self.hist_content = self.hist_content + wrapper.wrap(message)
+
+        self.hist = curses.newpad(len(self.hist_content), history.width)
+
+        i = 0
+        for line in self.hist_content:
+            self.hist.addstr(i, 0, line, curses.color_pair(color))
+            i += 1
+
+        pad_minrow = max(0, len(self.hist_content) - history.height)
+        self.hist.refresh(max(0, pad_minrow), 0,  history.y, history.x, history.y + history.height, history.x + history.width)
+

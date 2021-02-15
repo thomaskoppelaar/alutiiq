@@ -1,38 +1,38 @@
 from data import Player, Card
 from utils import load_card, clear_screen, card_selection
-from content_format import format_cards
+from format_cards import format_cards
 from screen import Screen
 from screen import maincontent
 
-def purchase_card(p: Player, card_name, cd, store) -> None:
+def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> None:
     """
     The transaction method. Buys a card for a player using their balance.
     The purchased card gets taken out of the shop, and placed into the player's discard pile.
     """
     # Card doesn't exist in the store
     if card_name not in store:
-        print("This card doesn't exist in the store!")
+        scr.log("This card doesn't exist in the store!")
 
     # Card has 0 left in the store
     elif store[card_name] == 0:
-        print("This card cannot be bought anymore!")
+        scr.log("This card cannot be bought anymore!")
 
     # Player can't purchase any more cards
     elif p.purchases_left == 0:
-        print("You can't buy any more cards this turn!")
+        scr.log("You can't buy any more cards this turn!")
 
     else:
         # Load in the card
         card_bought = load_card(card_name, cd)
 
         if card_bought.cost > (p.current_hand_balance + p.bonus_coins - p.amount_spent):
-            print("Insufficient funds!")
+            scr.log("Insufficient funds!")
             return
         
         # Confirm purchase
         p.purchases_left -= 1
         clear_screen()
-        print("Bought card: {0}".format(card_name))
+        scr.log("Bought card: {0}".format(card_name), 1)
 
         p.add_discardpile_card(card_bought)
 
@@ -109,14 +109,18 @@ def routine(scr: Screen, p: Player, s: dict, cd) -> None:
 
     scr.show_main_content(content)
 
-    # card: Card = card_selection(list(s.keys()), cd)
+    card: Card = card_selection(list(s.keys()), cd, scr)
 
-    # # Check if cards was picked
-    # if card is None: return
+    # Check if cards was picked
+    if card is None: 
+        # scr.clear_main_content()
+        return
 
 
-    # if (p.purchases_left <= 0):
-    #     print("You don't have any purchases left.")
-    #     return
+    if (p.purchases_left <= 0):
+        scr.log("You don't have any purchases left.")
+        return
     
-    # purchase_card(p, card.name, cd, s)
+    purchase_card(p, card.name, cd, s, scr)
+    # scr.clear_main_content()
+

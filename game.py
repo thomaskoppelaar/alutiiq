@@ -7,7 +7,7 @@ from routines import actions, store, turns, information
 from screen import Screen
 
 
-def start_new_game(p: Player, cd) -> None:
+def start_new_game(p: Player, scr, cd) -> None:
     """
     Function that gets called at the start of a new game.
 
@@ -18,10 +18,7 @@ def start_new_game(p: Player, cd) -> None:
     session_objects.Turn_counter = 0
 
     clear_screen()
-    print("=== ALUTIIQ ===")
-    print("Version: 0.2")
-    print("=== GAME START ===")
-
+    
     # Add starter cards into deck
     p.deck = [load_card("copper coin", cd)] * 7
     p.deck += [load_card("land", cd)] * 3
@@ -35,7 +32,7 @@ def start_new_game(p: Player, cd) -> None:
     random.shuffle(p.drawpile)
 
     # Draw 5 cards
-    p.draw_cards(5, verbose=False)
+    p.draw_cards(5, main_screen, verbose=False)
 
 
 ### Start of program
@@ -44,30 +41,30 @@ def start_new_game(p: Player, cd) -> None:
 # Create player
 mainguy = Player()
 
-# Start the game as this new dude
-start_new_game(mainguy, card_data)
-
 # Create screen
 main_screen = Screen()
 main_screen.init_screen()
 main_screen.calibration_routine()
 main_screen.display_main()
 
-turns.start_turn(mainguy)
+# Start the game as this new dude
+start_new_game(mainguy, main_screen, card_data)
 
+turns.start_turn(mainguy, main_screen)
 
 # Wait for some input
 c = ""
 while c != "q":
+    main_screen.move_cursor_to_userinput()
 
-    main_screen.update_dynamic_values(mainguy)
-    main_screen.update_hand_card(mainguy)
+    main_screen.update_dynamic_values(mainguy.get_hand_value())
+    main_screen.update_hand_card(mainguy.get_hand_cards())
 
     c = main_screen.retrieve_user_input()
 
     if (c == "e"):
-        turns.end_turn(mainguy)
-        turns.start_turn(mainguy)
+        turns.end_turn(mainguy, main_screen)
+        turns.start_turn(mainguy, main_screen)
     elif (c == "s"):
         store.routine(main_screen, mainguy, Store, card_data)
 

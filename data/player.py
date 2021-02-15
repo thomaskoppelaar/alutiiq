@@ -1,5 +1,6 @@
-from data import Card, session_objects
 import random
+
+from data import Card, session_objects
 
 # Player object
 class Player: 
@@ -66,23 +67,23 @@ class Player:
         while self.current_hand:
             self.discardpile.append(self.current_hand.pop())
 
-    def draw_cards(self, n: int, verbose: bool = True) -> None:
+    def draw_cards(self, n: int, scr = None, verbose: bool = True, ) -> None:
         """
         Tries to take n cards from the player's drawpile, and places them into the player's hand.
         If the drawpile is empty, the discard pile will be added onto the drawpile and shuffled.
         """
         # What are you doin trying to draw negative cards
         if (n <= 0): 
-            print("Uh, you tried to draw",n,"cards.")
+            scr.log("Uh, you tried to draw",n,"cards.")
             return
 
-        print("Drawing", n, "cards...")
+        scr.log("Drawing {0} cards...".format(n))
         # Repeat n times
         for _ in range(n):
 
             # If the draw pile is empty, and the discard pile is empty, we're can't do any more.
             if (len(self.drawpile) == 0 and len(self.discardpile) == 0):
-                print("Nothing left to draw!")
+                scr.log("Nothing left to draw!")
                 break
 
             # If the draw pile is empty, and the discard pile isn't, put everything into the draw pile.
@@ -91,13 +92,12 @@ class Player:
     
             # Pop a card from the draw pile, and add it onto the current hand
             card_drawn = self.drawpile.pop()
-            if verbose: print("Drew card:", card_drawn.name)
+            if verbose: scr.log("Drew card: {0}".format(card_drawn.name))
             self.current_hand.append(card_drawn)
         
         # Update hand value
         self.current_hand_balance = self.get_hand_value()
 
-    
     def add_hand_card(self, card: Card) -> None:
         self.deck.append(card)
         self.current_hand.append(card)
@@ -111,7 +111,7 @@ class Player:
         self.deck.append(card)
         self.discardpile.append(card)
 
-    def trash_hand_card(self, card: Card) -> None:
+    def trash_hand_card(self, scr, card: Card) -> None:
         """
         Remove a card from the player's hand.
         """
@@ -124,7 +124,7 @@ class Player:
             # Add card into trashpile
             session_objects.Trashpile.append(card)
 
-            print("Removed {0} from deck.".format(card.name))
+            scr.log("Removed {0} from deck.".format(card.name))
 
         except ValueError:
 
