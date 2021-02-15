@@ -47,7 +47,7 @@ def perform_action(p: Player, s: dict, cd: dict, card_name: str, scr: Screen) ->
 
                 break
             except:
-                print("Action failed!")
+                scr.log("Action failed!")
 
 
 def magic_spell(p: Player, s: dict, cd: dict, scr: Screen) -> bool:

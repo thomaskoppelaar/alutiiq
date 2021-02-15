@@ -60,7 +60,7 @@ while c != "q":
     main_screen.update_dynamic_values(mainguy.get_hand_value())
     main_screen.update_hand_card(mainguy.get_hand_cards())
 
-    c = main_screen.retrieve_user_input()
+    c = main_screen.retrieve_user_input().lower()
 
     if (c == "e"):
         turns.end_turn(mainguy, main_screen)

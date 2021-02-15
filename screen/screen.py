@@ -21,7 +21,7 @@ class Screen:
     mc_content: [str] = []
     mc_linepos: int = 0
     
-    hist_content: [str] = []
+    hist_content: [(str, int)] = []
 
 
     def __init__(self):
@@ -35,6 +35,7 @@ class Screen:
         self.screen.clear()
 
         curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
+        curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
         # /CURSES INIT
 
     def load_interface_from_file(self, filename: str) -> None:
@@ -269,13 +270,13 @@ class Screen:
 
         # Format message
         wrapper  = textwrap.TextWrapper(width= history.width)
-        self.hist_content = self.hist_content + wrapper.wrap(message)
+        self.hist_content = self.hist_content + [(i, color) for i in wrapper.wrap(message)]
 
         self.hist = curses.newpad(len(self.hist_content), history.width)
 
         i = 0
         for line in self.hist_content:
-            self.hist.addstr(i, 0, line, curses.color_pair(color))
+            self.hist.addstr(i, 0, line[0], curses.color_pair(line[1]))
             i += 1
 
         pad_minrow = max(0, len(self.hist_content) - history.height)

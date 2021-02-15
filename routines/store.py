@@ -26,7 +26,7 @@ def purchase_card(p: Player, card_name, cd, store, scr: Screen) -> None:
         card_bought = load_card(card_name, cd)
 
         if card_bought.cost > (p.current_hand_balance + p.bonus_coins - p.amount_spent):
-            scr.log("Insufficient funds!")
+            scr.log("Insufficient funds!", 2)
             return
         
         # Confirm purchase
