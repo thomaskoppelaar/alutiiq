@@ -4,7 +4,7 @@ from utils import clear_screen, load_card, input_card_selection, input_cards_sel
 from routines import store
 from screen import Screen, r_main_content
 
-def routine(p: Player, s: dict, scr: Screen) -> None:
+def routine(p: Player, scr: Screen) -> None:
     """
     Action routine. Allows player to play action cards.
     """
@@ -25,10 +25,10 @@ def routine(p: Player, s: dict, scr: Screen) -> None:
     
     if card is None: return
 
-    perform_action(p, s, card.name, scr)
+    perform_action(p, card.name, scr)
    
 
-def perform_action(p: Player, s: dict, card_name: str, scr: Screen) -> None:
+def perform_action(p: Player, card_name: str, scr: Screen) -> None:
     """
     Plays a card in the player's hand.
     Once a card is successfully played, the card gets put on the player's discard pile.
@@ -37,11 +37,11 @@ def perform_action(p: Player, s: dict, card_name: str, scr: Screen) -> None:
 
         # Found the card that we want to play
         if "action" in load_card(card).cardtype and card == card_name:
-            try:
+            # try:
                 p.current_hand.remove(card)
                 
                 scr.log("Played card: {0}".format(card_name))
-                action_performed: bool = globals()[load_card(card).action](p, s, scr)
+                action_performed: bool = globals()[load_card(card).action](p, scr)
 
                 if action_performed:
                     p.cards_played.append(card)
@@ -49,31 +49,31 @@ def perform_action(p: Player, s: dict, card_name: str, scr: Screen) -> None:
                 else:
                     p.current_hand.append(card)
                 break
-            except:
-                p.current_hand.append(card)
-                scr.log("Action failed!", 2)
+            # except:
+            #     p.current_hand.append(card)
+            #     scr.log("Action failed!", 2)
 
 
-def magic_spell(p: Player, s: dict, scr: Screen) -> bool:
+def magic_spell(p: Player, scr: Screen) -> bool:
     p.draw_cards(2, scr)
     return True
 
-def woodcutter(p: Player, s: dict, scr: Screen) -> bool:
+def woodcutter(p: Player, scr: Screen) -> bool:
     p.add_money(2, scr)
     p.add_purchases(1, scr)
     return True
 
-def smithy(p: Player, s: dict, scr: Screen) -> bool:
+def smithy(p: Player, scr: Screen) -> bool:
     p.draw_cards(3, scr)
     return True
 
-def festival(p: Player, s: dict, scr: Screen) -> bool:
+def festival(p: Player, scr: Screen) -> bool:
     p.add_actions(2, scr)
     p.add_purchases(1, scr)
     p.add_money(2, scr)
     return True
 
-def mine(p: Player, s: dict, scr: Screen) -> bool:
+def mine(p: Player, scr: Screen) -> bool:
     money_cards = {}
     for card in p.current_hand:
         if "money" in load_card(card).cardtype:
@@ -94,34 +94,37 @@ def mine(p: Player, s: dict, scr: Screen) -> bool:
 
     card_name = chosen_card.name
 
-
+    upgrade_card = ""
     if card_name == "platinum coin":
         scr.log("Sorry, the fun stops here.", 2)
         return False
     elif card_name == "gold coin":
-        p.trash_hand_card(money_cards[card_name], scr)
-        secret_card = load_card("platinum coin")
-        store.gift_card(p, "platinum coin", s, scr, pile="hand")
-        return True
+        upgrade_card = "platinum coin"
+    
     elif card_name == "silver coin":
-        p.trash_hand_card(money_cards[card_name], scr)
-        store.gift_card(p, "gold coin", s, scr, pile="hand")
-        return True
+        upgrade_card = "gold coin"
+    
     elif card_name == "copper coin":
+       upgrade_card = "silver coin"
+    else:
+        return False
+    
+    if store.gift_card(p, upgrade_card, scr, pile="hand"):
         p.trash_hand_card(money_cards[card_name], scr)
-        store.gift_card(p, "silver coin", s, scr, pile="hand")
         return True
-
-def bandit_sp(p: Player, s: dict, scr: Screen) -> bool:
-    store.gift_card(p, "gold coin", s, scr, pile="discard")
+    else:
+        return False
+    
+def bandit_sp(p: Player, scr: Screen) -> bool:
+    store.gift_card(p, "gold coin", scr, pile="discard")
     return True
 
-def village(p: Player, s: dict, scr: Screen) -> bool:
+def village(p: Player, scr: Screen) -> bool:
     p.add_actions(2, scr)
     p.draw_cards(1, scr)
     return True
 
-def cellar(p: Player, s: dict, scr: Screen) -> bool:
+def cellar(p: Player, scr: Screen) -> bool:
 
     cards = [i for i in p.current_hand]
 

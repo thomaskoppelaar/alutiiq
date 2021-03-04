@@ -113,7 +113,7 @@
 
 - [ ] Bug - Interface: Interface crashes on resize of main game
 - [X] Bug - User input: If the input space is full, and the user presses delete, a "?" will remain on screen.
-- [ ] Bug - interface
+- [ ] Bug - Interface: background sometimes not properly displayed
 -
 - [ ] Feature - Cards: new cards
     - [ ] Chapel

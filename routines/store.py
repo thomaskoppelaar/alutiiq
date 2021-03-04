@@ -1,20 +1,20 @@
-from data import Player, Card
+from data import Player, Card, s_store
 from utils import load_card, clear_screen, input_card_selection, format_cards
 from screen import Screen
 from screen import r_main_content
 
-def purchase_card(p: Player, card: str, store, scr: Screen) -> bool:
+def purchase_card(p: Player, card: str, scr: Screen) -> bool:
     """
     The transaction method. Buys a card for a player using their balance.
     The purchased card gets taken out of the shop, and placed into the player's discard pile.
     """
     # Card doesn't exist in the store
-    if card not in store:
+    if card not in s_store:
         scr.log("This card doesn't exist in the store!", 2)
         return False
 
     # Card has 0 left in the store
-    elif store[card] == 0:
+    elif s_store.get(card) == 0:
         scr.log("This card cannot be bought anymore!", 2)
         return False
 
@@ -41,21 +41,23 @@ def purchase_card(p: Player, card: str, store, scr: Screen) -> bool:
         # Subtract cost from balance
         p.amount_spent += card_bought.cost
 
+
+        remove_card(card, scr)
         return True
 
 
-def remove_card(p: Player, card: str, store) -> None:
+def remove_card(card: str, scr) -> None:
     """
     Removes a card from the store.
     """
 
     # Remove one card from the store list
-    store[card] -= 1
+    s_store[card] -= 1
 
-    if (store[card] == 0):
+    if (s_store[card] == 0):
         scr.log("This was the last card of this type: There are none left.")
 
-def gift_card(p: Player, card: str, s, scr, pile: str=None) -> None:
+def gift_card(p: Player, card: str, scr, pile: str=None) -> bool:
     """
     Gifts a player a certain card. 
     """
@@ -63,15 +65,17 @@ def gift_card(p: Player, card: str, s, scr, pile: str=None) -> None:
         pile = "discard" 
 
     # Card doesn't exist in the store
-    if card not in s.keys():
+    if card not in s_store.keys():
         scr.log("This card doesn't exist in the store!", 2)
+        return False
 
     # Card has 0 left in the store
-    elif s[card] == 0:
+    elif s_store.get(card) == 0:
         scr.log("There are no more copies left of this card.", 2)
+        return False
 
     else:
-        scr.log("Received card: " + card, 1)       
+        scr.log("Received card: " + card, 1)
 
         # Decide where to add the card
         if pile == "hand":
@@ -81,9 +85,10 @@ def gift_card(p: Player, card: str, s, scr, pile: str=None) -> None:
         else: 
             p.add_discardpile_card(card)
 
-        remove_card(p, card, s)
+        remove_card(card, scr)
+        return True
 
-def routine(scr: Screen, p: Player, s: dict) -> None:
+def routine(scr: Screen, p: Player) -> None:
     """
     Store routine. Allows player to view and buy cards.
     """
@@ -94,9 +99,9 @@ def routine(scr: Screen, p: Player, s: dict) -> None:
     content.append("Items for sale:")
     
     content = content + format_cards(
-        list(s.keys()), r_main_content.width, 
+        list(s_store.keys()), r_main_content.width, 
         show_description=True, show_type=True, show_cost=True,
-        custom_lines=["  - Left in stock: {0}".format(s.get(i)) for i in list(s.keys())]
+        custom_lines=["  - Left in stock: {0}".format(s_store.get(i)) for i in list(s_store.keys())]
     )
 
     content.append("You have: {0} (+{1}) - {2} = ${3} left."
@@ -114,7 +119,7 @@ def routine(scr: Screen, p: Player, s: dict) -> None:
     done = False
     # while we're not done with buying something, stay in this loop.
     while not done: 
-        card: Card = input_card_selection(list(s.keys()), scr)
+        card: Card = input_card_selection(list(s_store.keys()), scr)
 
         # Check if cards was picked
         if card is None: 
@@ -126,6 +131,6 @@ def routine(scr: Screen, p: Player, s: dict) -> None:
             scr.log("You don't have any purchases left.", 2)
             continue
         
-        done = purchase_card(p, card.name, s, scr)
+        done = purchase_card(p, card.name, scr)
     
     scr.clear_main_content()

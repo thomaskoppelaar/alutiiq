@@ -3,7 +3,7 @@ import curses
 
 from data import Player, s_store, session_objects
 from utils import load_card, clear_screen, format_cards
-from routines import actions, store, turns, information
+from routines import actions, store, turns
 from screen import Screen, r_main_content
 
 def start_new_game(p: Player, scr) -> None:
@@ -83,11 +83,11 @@ while c != "q":
     
     # Store
     elif (c == "s"):
-        store.routine(main_screen, mainguy, s_store)
+        store.routine(main_screen, mainguy)
 
     # Play Action
     elif (c == "a"):
-        actions.routine(mainguy, s_store, main_screen)
+        actions.routine(mainguy, main_screen)
     
     # Update screen regions after an action
     main_screen.update_turn_overview(

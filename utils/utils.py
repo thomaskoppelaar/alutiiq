@@ -44,7 +44,7 @@ def input_cards_selection(choices: [str], scr: Screen, min: int = 1, max: int = 
         player_choice = scr.retrieve_user_input()
         player_choice = player_choice.lower()
         player_choice = player_choice.split(',')
-        player_choice = [s.strip() for s in player_choice]
+        player_choice = [i.strip() for i in player_choice]
 
         if len(player_choice) == 0:
             scr.log("Enter an option.")
