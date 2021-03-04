@@ -17,7 +17,7 @@ def clear_screen():
     os.system('cls' if os.name=='nt' else 'clear')
 
 # (Boilerplate) Load a json dict into an object
-def load_card(card_name: str, card_data: [dict]) -> Card:
+def load_card(card_name: str) -> Card:
     """
     Makes a card object out of a json string.
     """
@@ -26,8 +26,8 @@ def load_card(card_name: str, card_data: [dict]) -> Card:
     card_obj = json.loads(card_string, object_hook=Card)
     return card_obj
 
-def input_card_selection(choices: [str], cd, scr: Screen) -> Card:
-    cards = input_cards_selection(choices, cd, scr, min=1, max=1)
+def input_card_selection(choices: [str], scr: Screen) -> Card:
+    cards = input_cards_selection(choices, scr, min=1, max=1)
 
     # Happens when player cancels the selection.
     if len(cards) == 0:
@@ -35,7 +35,7 @@ def input_card_selection(choices: [str], cd, scr: Screen) -> Card:
     else:
         return cards[0]
 
-def input_cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: int = 1) -> [Card]:
+def input_cards_selection(choices: [str], scr: Screen, min: int = 1, max: int = 1) -> [Card]:
 
     # Ask the player for a choice
     player_choice = ""
@@ -49,7 +49,7 @@ def input_cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: in
         if len(player_choice) == 0:
             scr.log("Enter an option.")
             continue
-
+        
         elif player_choice[0] == "c":
             
             scr.log("Action cancelled.")
@@ -70,14 +70,14 @@ def input_cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: in
                     try:
                         index = int(choice) - 1
                         card_name = choices[index]
-                        res.append(load_card(card_name, cd))
+                        res.append(load_card(card_name))
                     except:
                         scr.log("Invalid number choice!")
                         res = []
                         break
                 else:
                     try:
-                        res.append(load_card(card_name, cd))
+                        res.append(load_card(card_name))
                     except:
                         scr.log("Invalid card choice!")
                         res = []
@@ -87,16 +87,13 @@ def input_cards_selection(choices: [str], cd, scr: Screen, min: int = 1, max: in
             else:
                 return res
 def get_turns() -> int:
-    return session_objects.Turn_counter
+    return session_objects.s_turn_counter
 
 def get_game_mode() -> str:
-    return session_objects.Game_mode
+    return session_objects.s_game_mode
 
 def get_game_version() -> str:
-    return session_objects.Game_version
+    return session_objects.s_game_version
 
 def stub() -> None:
     return
-
-def get_point_total() -> str:
-    return "WIP"

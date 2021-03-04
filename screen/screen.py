@@ -2,10 +2,9 @@
 import curses
 import textwrap
 
-from data import Card
-from screen.regions import Region, turncounter, gameversion, gamemode, pointtotal
-from screen.regions import handcards, userinput, maincontent, history
-from data.session_objects import Turn_counter, Game_mode, Game_version
+from data import Card, session_objects
+from screen import Region, r_turn_counter, r_game_version, r_game_mode, r_point_total, r_hand_cards, r_user_input, r_main_content, r_history
+from screen import r_money_in_hand, r_actions_left, r_purchases_left, r_bonus_money, r_money_left
 
 # Screen requirements
 minimum_width = 130
@@ -20,7 +19,6 @@ class Screen:
 
     mc_content: [str] = []
     mc_linepos: int = 0
-    
     hist_content: [(str, int)] = []
 
 
@@ -60,7 +58,6 @@ class Screen:
             return
         else:
             
-                
             c = ""
             while c != "\n":
                 self.screen.resize(minimum_height, minimum_width)
@@ -73,15 +70,15 @@ class Screen:
         self.clear_main_content()
         self.clear_history()
 
-        self.screen.addstr(gamemode.y, gamemode.x, Game_mode.rjust(gamemode.width, " "))
-        self.screen.addstr(gameversion.y, gameversion.x, Game_version.rjust(gameversion.width, " "))
-        self.hist = curses.newpad(history.height, history.width)
+        self.screen.addstr(r_game_mode.y, r_game_mode.x, session_objects.s_game_mode.rjust(r_game_mode.width, " "))
+        self.screen.addstr(r_game_version.y, r_game_version.x, session_objects.s_game_version.rjust(r_game_version.width, " "))
+        self.hist = curses.newpad(r_history.height, r_history.width)
         self.screen.move(27, 5)
 
     def update_hand_card(self, cards: [str]) -> None:
 
 
-        self.handcard = curses.newwin(handcards.height, handcards.width, handcards.y, handcards.x)
+        self.handcard = curses.newwin(r_hand_cards.height, r_hand_cards.width, r_hand_cards.y, r_hand_cards.x)
 
         self.handcard.clear()
 
@@ -92,10 +89,10 @@ class Screen:
 
         self.handcard.refresh()
 
-    def update_dynamic_values(self, deck_value: int) -> None:
+    def update_top_dynamic_values(self, deck_value: int) -> None:
 
-        self.screen.addstr(turncounter.y, turncounter.x, str(Turn_counter).rjust(turncounter.width, " "))
-        self.screen.addstr(pointtotal.y, pointtotal.x, str(deck_value).rjust(pointtotal.width, " "))
+        self.screen.addstr(r_turn_counter.y, r_turn_counter.x, str(session_objects.s_turn_counter).rjust(r_turn_counter.width, " "))
+        self.screen.addstr(r_point_total.y, r_point_total.x, str(deck_value).rjust(r_point_total.width, " "))
 
         
         # Refresh the screen
@@ -131,7 +128,7 @@ class Screen:
                 index = max(0, index - 1)
 
                 # Move the cursor accordingly
-                self.screen.move(userinput.y, userinput.x + index)
+                self.screen.move(r_user_input.y, r_user_input.x + index)
 
             elif c == curses.KEY_RIGHT:
 
@@ -139,7 +136,7 @@ class Screen:
                 index = min(len(res), index + 1)
 
                 # Move the cursor accordingly
-                self.screen.move(userinput.y, userinput.x + index)
+                self.screen.move(r_user_input.y, r_user_input.x + index)
 
 
             # Backspace key:
@@ -161,16 +158,16 @@ class Screen:
                 try:
 
                     # Save the character at the correct place
-                    if len(res) >= userinput.width:
+                    if len(res) >= r_user_input.width:
                         res[index] = chr(c)
                     else:
                         
                         # Only add to input arr if in this string
-                        if (chr(c) in "abcdefghijklmnopqrstuvwxyz1234567890 "):
+                        if (chr(c) in "abcdefghijklmnopqrstuvwxyz1234567890, "):
                             res.insert(index, chr(c))
 
                             # Get the new index
-                            index = min(userinput.width - 1, index + 1)
+                            index = min(r_user_input.width - 1, index + 1)
                 
                 except ValueError:
                     pass
@@ -179,10 +176,10 @@ class Screen:
             # Print new string, and clear one character more in case some odd character is printed
             # e.g. when deleting the last character, "^?" gets printed making "?" appear right beside the input
             # where the user can't get to it
-            self.screen.addstr(userinput.y, userinput.x, "".join(res).ljust(userinput.width, "_") + " ")
+            self.screen.addstr(r_user_input.y, r_user_input.x, "".join(res).ljust(r_user_input.width, "_") + " ")
 
             # Move cursor back to index, as addstr moves it
-            self.screen.move(userinput.y, userinput.x + index)
+            self.screen.move(r_user_input.y, r_user_input.x + index)
             
             # Refresh
             self.screen.refresh()
@@ -191,7 +188,7 @@ class Screen:
             c = self.screen.getch()
         
         # Replace user input with underscores again
-        self.screen.addstr(userinput.y, userinput.x, "_" * userinput.width)
+        self.screen.addstr(r_user_input.y, r_user_input.x, "_" * r_user_input.width)
 
         # Move cursor back to the start.
         self.move_cursor_to_userinput()
@@ -203,7 +200,7 @@ class Screen:
     def scroll_up(self) -> None:
         if self.mcwin is None: return
 
-        mc: Region = maincontent
+        mc: Region = r_main_content
 
         # Don't scroll more than is needed
         self.mc_linepos = max(self.mc_linepos - 1, 0)
@@ -214,7 +211,7 @@ class Screen:
     def scroll_down(self) -> None:
         if self.mcwin is None: return
 
-        mc: Region = maincontent
+        mc: Region = r_main_content
 
         # Don't scroll more than is needed
         self.mc_linepos = min(self.mc_linepos + 1, len(self.mc_content) - mc.height - 1)
@@ -225,7 +222,7 @@ class Screen:
         Moves the cursor to where the user input starts.
         """
 
-        self.screen.move(userinput.y, userinput.x)
+        self.screen.move(r_user_input.y, r_user_input.x)
 
     def end_screen(self) -> None:
         
@@ -236,17 +233,16 @@ class Screen:
     def clear_main_content(self) -> None:
         self.mc_content = []
         self.mc_linepos = 0
-        self.mcwin = curses.newwin(maincontent.height + 1, maincontent.width, maincontent.y, maincontent.x)
+        self.mcwin = curses.newwin(r_main_content.height + 1, r_main_content.width, r_main_content.y, r_main_content.x)
         self.mcwin.clear()
         self.mcwin.refresh()
 
     def show_main_content(self, content: []) -> None:
-
-
+        self.clear_main_content()
         self.mc_content = content
         self.mc_linepos = 0
 
-        mc: Region = maincontent
+        mc: Region = r_main_content
 
         self.mcwin = curses.newpad(len(content), mc.width)
 
@@ -267,26 +263,49 @@ class Screen:
         self.hist_content = []
         
         # Make window over the history content region, and clear it
-        self.hist = curses.newwin(history.height, history.width, history.y, history.x)
+        self.hist = curses.newwin(r_history.height, r_history.width, r_history.y, r_history.x)
         self.hist.clear()
         self.hist.refresh()
 
     def log(self, message: str, color: int=0) -> None:
         """
-        Logs a message to the history window.
+        Logs a message to the history window. Text gets wrapped automatically.
         """
 
         # Format message
-        wrapper  = textwrap.TextWrapper(width= history.width)
+        wrapper  = textwrap.TextWrapper(width= r_history.width)
         self.hist_content = self.hist_content + [(i, color) for i in wrapper.wrap(message)]
 
-        self.hist = curses.newpad(len(self.hist_content), history.width)
+        self.hist = curses.newpad(len(self.hist_content), r_history.width)
 
         i = 0
         for line in self.hist_content:
             self.hist.addstr(i, 0, line[0], curses.color_pair(line[1]))
             i += 1
 
-        pad_minrow = max(0, len(self.hist_content) - history.height)
-        self.hist.refresh(max(0, pad_minrow), 0,  history.y, history.x, history.y + history.height, history.x + history.width)
+        pad_minrow = max(0, len(self.hist_content) - r_history.height)
+        self.hist.refresh(max(0, pad_minrow), 0,  r_history.y, r_history.x, r_history.y + r_history.height, r_history.x + r_history.width)
 
+    def update_turn_overview(self, money: int, actions: int, purchases: int, bonus: int, left: int) -> None:
+        
+        self.screen.addstr(
+            r_money_in_hand.y, r_money_in_hand.x, 
+            str(money).ljust(r_money_in_hand.width, " "), curses.color_pair(2 if money == 0 else 0)
+        )
+        self.screen.addstr(
+            r_actions_left.y, r_actions_left.x, 
+            str(actions).ljust(r_actions_left.width, " "), curses.color_pair(2 if actions == 0 else 1 if actions > 1 else 0)
+        )
+        self.screen.addstr(
+            r_purchases_left.y, r_purchases_left.x, 
+            str(purchases).ljust(r_purchases_left.width, " "), curses.color_pair(2 if purchases == 0 else 1 if purchases > 1 else 0)
+        )
+        self.screen.addstr(
+            r_bonus_money.y, r_bonus_money.x, 
+            str(bonus).ljust(r_bonus_money.width, " "), curses.color_pair(0 if bonus == 0 else 1)
+        )
+        self.screen.addstr(
+            r_money_left.y, r_money_left.x, 
+            str(left).ljust(r_money_left.width, " "), curses.color_pair(2 if left == 0 else 0)
+        )
+        self.screen.refresh()

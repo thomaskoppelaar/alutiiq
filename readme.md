@@ -20,10 +20,7 @@ It's heavily inspired by Dominion.
 
 Alutiiq is a deckbuilder, meaning that you try and create strategies around existing cards.
 
-Each turn, you draw 5 cards. You're able to play one action card per turn, as well as buy one card in the store.
-The amount of money you have is decided by the cards in your hand, and the action cards that you have played in your turn. You can gain more money in a turn through the usage of actions and buying new cards that have an increased value.
-
-If you're familiar with Dominion, you will most likely recognize all of the cards in this game. If not, you can use the `(I)nformation` command to see a card's description.
+If you've played Dominion before, you will most likely be familiar with the mechanics already. If not, I suggest you take a look at the [rules](./docs/rules.md)
 
 ## Contributing
 

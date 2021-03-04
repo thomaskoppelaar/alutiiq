@@ -1,24 +1,26 @@
 import random
 
+from utils import load_card
 from data import Card, session_objects
+from screen import Screen
 
 # Player object
 class Player: 
 
     # List containing all cards.
-    deck: [Card] = []
+    deck: [str] = []
 
     # List containing current drawpile.
-    drawpile: [Card] = []
+    drawpile: [str] = []
 
     # List containing all cards in the discard pile.
-    discardpile: [Card] = []
+    discardpile: [str] = []
 
     # List containing all cards the player is currently holding.
-    current_hand: [Card] = []
+    current_hand: [str] = []
 
     # List containing all cards the player has played in a turn.
-    cards_played: [Card] = []
+    cards_played: [str] = []
 
     purchases_left: int = 0
     actions_left: int = 0
@@ -29,14 +31,6 @@ class Player:
     bonus_coins: int = 0
 
     amount_spent: int = 0
-
-    def card_played(self, card: Card) -> None:
-        """
-        Puts a card into a temporary pile, that gets cleared at the end of a player's turn.
-        Ensures that the same card cannot be played twice within a turn.
-        """
-        self.current_hand.remove(card)
-        self.cards_played.append(card)
 
     def played_cards_to_discard(self) -> None:
         """
@@ -67,17 +61,17 @@ class Player:
         while self.current_hand:
             self.discardpile.append(self.current_hand.pop())
 
-    def draw_cards(self, n: int, scr = None, verbose: bool = True, ) -> None:
+    def draw_cards(self, n: int, scr: Screen, verbose: bool = True, ) -> None:
         """
         Tries to take n cards from the player's drawpile, and places them into the player's hand.
         If the drawpile is empty, the discard pile will be added onto the drawpile and shuffled.
         """
         # What are you doin trying to draw negative cards
         if (n <= 0): 
-            scr.log("Uh, you tried to draw",n,"cards.")
+            scr.log("Uh, you tried to draw {0} cards.".format(n), 2)
             return
 
-        scr.log("Drawing {0} cards...".format(n))
+        scr.log("Drawing {0} cards...".format(n), 1)
         # Repeat n times
         for _ in range(n):
 
@@ -91,29 +85,29 @@ class Player:
                 self.discard_to_draw()
     
             # Pop a card from the draw pile, and add it onto the current hand
-            card_drawn = self.drawpile.pop()
+            card_drawn = load_card(self.drawpile.pop())
             if verbose: scr.log("Drew card: {0}".format(card_drawn.name))
-            self.current_hand.append(card_drawn)
+            self.current_hand.append(card_drawn.name)
         
         # Update hand value
         self.current_hand_balance = self.get_hand_value()
 
-    def add_hand_card(self, card: Card) -> None:
+    def add_hand_card(self, card: str) -> None:
         self.deck.append(card)
         self.current_hand.append(card)
         self.current_hand_balance = self.get_hand_value()
     
-    def add_drawpile_card(self, card: Card) -> None:
+    def add_drawpile_card(self, card: str) -> None:
         self.deck.append(card)
         self.drawpile.append(card)
 
-    def add_discardpile_card(self, card: Card) -> None:
+    def add_discardpile_card(self, card: str) -> None:
         self.deck.append(card)
         self.discardpile.append(card)
 
-    def trash_hand_card(self, scr, card: Card) -> None:
+    def trash_hand_card(self, card: str, scr: Screen) -> None:
         """
-        Remove a card from the player's hand.
+        Remove a card from the player's hand and deck.
         """
         try:
 
@@ -122,9 +116,9 @@ class Player:
             self.deck.remove(card)
 
             # Add card into trashpile
-            session_objects.Trashpile.append(card)
+            session_objects.s_trashpile.append(card)
 
-            scr.log("Removed {0} from deck.".format(card.name))
+            scr.log("Removed {0} from deck.".format(load_card(card).name))
 
         except ValueError:
 
@@ -138,7 +132,7 @@ class Player:
         # First, get a set of the player's cards, and count how many they have of each card.
         card_set = {}
         for card in self.current_hand:
-            card_set[card.name] = card_set.get(card.name, 0) + 1
+            card_set[card] = card_set.get(card, 0) + 1
 
         # Then, format strings in a list in the way they should be displayed.
         res = []
@@ -149,7 +143,7 @@ class Player:
             string = string.ljust(15, " ")
 
             # Card count, padded with strings to be 3 characters long
-            string += " x{0}".format(sum([1 for i in self.current_hand if i.name == card])).rjust(4, " ")
+            string += " x{0}".format(sum([1 for i in self.current_hand if i == card])).rjust(4, " ")
             res.append(string)
 
         return res
@@ -161,7 +155,8 @@ class Player:
         """
         res = 0
 
-        for card in self.current_hand:
+        for i in self.current_hand:
+            card = load_card(i)
             if "money" in card.cardtype:
                 res += card.value
 
@@ -173,30 +168,31 @@ class Player:
         This is used as the player's final score.
         """
         res = 0
-        for card in self.deck:
+        for i in self.deck:
+            card = load_card(i)
             # Check if the card actually counts towards the final points
             if "point" in card.cardtype:
                 res += card.value
         return res
 
-    def add_actions(self, i: int) -> None:
+    def add_actions(self, i: int, scr: Screen) -> None:
        """
        Should be called whenever the player gets bonus actions.
        """
-       print("Gained {0} bonus action(s)! (Lasts only this turn.)".format(i))
+       scr.log("Gained {0} bonus action(s)!".format(i), 1)
        self.actions_left += i
 
-    def add_purchases(self, i: int) -> None:
+    def add_purchases(self, i: int, scr: Screen) -> None:
         """
         Should be called whenever the player gets bonus purchases.
         """
-        print("Gained {0} bonus purchase(s)! (Lasts only this turn.)".format(i))
+        scr.log("Gained {0} bonus purchase(s)!".format(i), 1)
         self.purchases_left += i
     
-    def add_money(self, i: int) -> None:
+    def add_money(self, i: int, scr: Screen) -> None:
         """
         Should be called whenever the player gets bonus money.
         """
-        print("Gained {0} bonus money! (Lasts only this turn.)".format(i))
+        scr.log("Gained {0} bonus money!".format(i), 1)
         
         self.bonus_coins += i

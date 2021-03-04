@@ -118,7 +118,16 @@
         "cardtype": "action",
         "description": "+1 card, +2 actions.",
         "action": "village"
+    },
+
+    "cellar": {
+        "name": "cellar",
+        "cost": 2,
+        "cardtype": "action",
+        "description": "+1 Action. Discard any number of cards, then draw that many",
+        "action": "cellar"
     }
+
     
     
     

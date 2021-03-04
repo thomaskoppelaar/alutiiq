@@ -1,30 +1,25 @@
 import random
 import curses
 
-from utils import load_card, clear_screen, card_data
-from data import Player, Store, session_objects
+from data import Player, s_store, session_objects
+from utils import load_card, clear_screen, format_cards
 from routines import actions, store, turns, information
-from screen import Screen, maincontent
-from format_cards import format_cards
+from screen import Screen, r_main_content
 
-
-def start_new_game(p: Player, scr, cd) -> None:
+def start_new_game(p: Player, scr) -> None:
     """
     Function that gets called at the start of a new game.
 
     p: The player object to start the game with.
-    cd: The card data object.
     """
     # Reset turn counter
-    session_objects.Turn_counter = 0
+    session_objects.s_turn_counter = 0
 
     clear_screen()
     
     # Add starter cards into deck
-    p.deck = [load_card("copper coin", cd)] * 7
-    p.deck += [load_card("land", cd)] * 3
-    # p.deck += [load_card("magic spell", cd)]
-    
+    p.deck = ["copper coin"] * 7
+    p.deck += ["land"] * 3
     
     # Copy deck into drawpile
     p.drawpile = p.deck.copy()
@@ -36,8 +31,7 @@ def start_new_game(p: Player, scr, cd) -> None:
     p.draw_cards(5, main_screen, verbose=False)
 
 
-### Start of program
-
+### Start of game
 
 # Create player
 mainguy = Player()
@@ -49,75 +43,57 @@ main_screen.calibration_routine()
 main_screen.display_main()
 
 # Start the game as this new dude
-start_new_game(mainguy, main_screen, card_data)
+start_new_game(mainguy, main_screen)
 
 turns.start_turn(mainguy, main_screen)
+
+main_screen.update_turn_overview(
+    mainguy.get_hand_value(), mainguy.actions_left, mainguy.purchases_left, mainguy.bonus_coins,
+    mainguy.current_hand_balance + mainguy.bonus_coins - mainguy.amount_spent
+)
 
 # Wait for some input
 c = ""
 while c != "q":
     main_screen.move_cursor_to_userinput()
 
-    main_screen.update_dynamic_values(mainguy.get_deck_score())
+    # Update screen regions
+    main_screen.update_top_dynamic_values(mainguy.get_deck_score())
     main_screen.update_hand_card(mainguy.get_hand_cards())
 
+    # Display cards in hand
     card_set = {}
     for card in mainguy.current_hand:
-        card_set[card.name] = card_set.get(card.name, 0) + 1
+        card_set[card] = card_set.get(card, 0) + 1
 
-    main_screen.show_main_content(
-        format_cards([card for card in card_set.keys()], card_data, maincontent.width
+    content = []
+    content.append(("=#= Cards currently in your hand: =#=".center(r_main_content.width, " "), 1))
+    content = content + format_cards([card for card in card_set.keys()], r_main_content.width
         , show_description=True, show_type=True
         )
-    )
+    main_screen.show_main_content(content)
+
+    # Get userinput
     c = main_screen.retrieve_user_input().lower()
 
+    # End turn
     if (c == "e"):
         turns.end_turn(mainguy, main_screen)
         turns.start_turn(mainguy, main_screen)
+    
+    # Store
     elif (c == "s"):
-        store.routine(main_screen, mainguy, Store, card_data)
+        store.routine(main_screen, mainguy, s_store)
 
+    # Play Action
+    elif (c == "a"):
+        actions.routine(mainguy, s_store, main_screen)
+    
+    # Update screen regions after an action
+    main_screen.update_turn_overview(
+        mainguy.get_hand_value(), mainguy.actions_left, mainguy.purchases_left, mainguy.bonus_coins,
+        mainguy.current_hand_balance + mainguy.bonus_coins - mainguy.amount_spent
+    )
 
+# Close the screen
 main_screen.end_screen()
-
-# while 1:
-#     turns.start_turn(mainguy)
-
-#     player_choice = ""
-
-#     while 1:
-#         mainguy.show_hand_cards()
-#         print("=== Turn:", session_objects.Turn_counter, "===")
-#         print("Actions left:", mainguy.actions_left)
-#         print("Purchases left:", mainguy.purchases_left)
-#         print("show (S)tore, show (H)and")
-#         print("play (A)ction, (E)nd turn")
-#         print("screen (C)lear, (Q)uit game")
-#         print("(I)nformation about a card")
-#         print("===============")
-
-#         player_choice = input("Your choice: ")
-#         player_choice = player_choice.upper()
-
-#         if (player_choice == "Q"):
-#             exit(0)
-#         elif (player_choice == "C"):
-#             clear_screen()
-
-#         elif (player_choice == "H"):
-#             clear_screen()
-#             mainguy.show_hand_cards()
-
-#         elif (player_choice == "E"):
-#             turns.end_turn(mainguy)
-#             break
-#         elif (player_choice == "S"):
-#             clear_screen()
-#             store.routine(mainguy, Store, card_data)
-#         elif (player_choice == "A"):
-#             actions.routine(mainguy, Store, card_data)
-#         elif (player_choice == "I"):
-#             information.routine(mainguy, Store, card_data)
-#         else:
-#             print("That's not valid input!")

@@ -1,9 +1,8 @@
 import textwrap
+from utils import load_card
+from data import Card
 
-from utils import load_card, Card
-
-
-def format_cards(cards: [str], cd, width, show_description: bool = False, show_type: bool = False, show_cost: bool = False) -> [str]:
+def format_cards(cards: [str], width, show_description: bool = False, show_type: bool = False, show_cost: bool = False, custom_lines: [str] = None) -> [str]:
     
     res = []
 
@@ -13,7 +12,7 @@ def format_cards(cards: [str], cd, width, show_description: bool = False, show_t
     
     i = 1
     for card_name in cards:
-        card = load_card(card_name, cd)
+        card = load_card(card_name)
 
         res.append("{0}. {1} {2} {3}".format(
             # Number
@@ -33,8 +32,12 @@ def format_cards(cards: [str], cd, width, show_description: bool = False, show_t
             wrapper = textwrap.TextWrapper(width=width)
             res = res + wrapper.wrap("  - " + card.description)
 
-            
-            res.append("")
+        # Custom lines can be added per card
+        if custom_lines is not None:
+            res.append(custom_lines[i-1])
+
+        res.append("")
+
         i += 1
 
     return res

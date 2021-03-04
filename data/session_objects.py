@@ -1,11 +1,12 @@
 # The store object contains, well, all store cards. 
 # These are cards that can be bought by the player.
-Store = {
+s_store = {
     "silver coin": 10,
     "gold coin": 6,
     "platinum coin": 2,
     "land": 10,
     "village": 8,
+    "cellar": 4,
     "festival": 4,
     "smithy": 5,
     "mine": 2,
@@ -13,10 +14,10 @@ Store = {
     "castle": 1
 }
 
-Turn_counter = 0
+s_turn_counter = 0
 
-Game_mode = "castle race"
+s_game_mode = "castle race"
 
-Trashpile = []
+s_trashpile = []
 
-Game_version = "0.2.1"
+s_game_version = "0.2.1"
