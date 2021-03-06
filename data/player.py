@@ -122,7 +122,7 @@ class Player:
 
         except ValueError:
 
-            print("Can't remove this card!") 
+            scr.log("Can't remove this card!") 
 
     def get_hand_cards(self) -> [str]:
         """

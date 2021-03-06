@@ -146,3 +146,43 @@ def cellar(p: Player, scr: Screen) -> bool:
     p.draw_cards(len(chosen_cards), scr)
 
     return True
+
+def council(p: Player, scr: Screen) -> bool:
+
+    p.draw_cards(4, scr)
+    p.add_purchases(1, scr)
+    return True
+
+def laboratory(p: Player, scr: Screen) -> bool:
+
+    p.draw_cards(2, scr)
+    p.add_actions(1, scr)
+    return True
+
+def moneylender(p: Player, scr: Screen) -> bool:
+
+    if "copper coin" in p.current_hand:
+        p.trash_hand_card("copper coin", scr)
+        p.add_money(3, scr)
+        return True
+    
+    else:
+        scr.log("No copper coin to remove from your hand!", 2)
+        return False
+
+def chapel(p: Player, scr: Screen) -> bool:
+
+    cards = [i for i in p.current_hand]
+
+    scr.show_main_content(
+        ["Which cards do you want to remove from your deck?", "Separate your choices with a comma."] + format_cards(cards, r_main_content.width)
+    )
+    
+    chosen_cards = input_cards_selection(cards, scr, min=1, max=len(p.current_hand))
+    
+    if chosen_cards == []: return False
+
+    for card in chosen_cards:
+        p.trash_hand_card(card.name, scr)
+
+    return True

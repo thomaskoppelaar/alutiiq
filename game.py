@@ -90,6 +90,7 @@ while c != "q":
         actions.routine(mainguy, main_screen)
     
     # Update screen regions after an action
+    mainguy.current_hand_balance = mainguy.get_hand_value()
     main_screen.update_turn_overview(
         mainguy.get_hand_value(), mainguy.actions_left, mainguy.purchases_left, mainguy.bonus_coins,
         mainguy.current_hand_balance + mainguy.bonus_coins - mainguy.amount_spent

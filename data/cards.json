@@ -126,9 +126,30 @@
         "cardtype": "action",
         "description": "+1 Action. Discard any number of cards, then draw that many",
         "action": "cellar"
+    },
+
+    "council": {
+        "name": "council",
+        "cost": 5,
+        "cardtype": "action",
+        "description": "+4 cards, +1 buy.",
+        "action": "council"
+    },
+
+    "laboratory": {
+        "name": "laboratory",
+        "cost": 5,
+        "cardtype": "action",
+        "description": "+2 cards, +1 action.",
+        "action": "laboratory"
+    },
+
+    "moneylender": {
+        "name": "moneylender",
+        "cost": 4,
+        "cardtype": "action",
+        "description": "You may trash a copper. Gain +3 bonus money if you choose to do so.",
+        "action": "moneylender"
     }
 
-    
-    
-    
 }

@@ -4,14 +4,16 @@ s_store = {
     "silver coin": 10,
     "gold coin": 6,
     "platinum coin": 2,
-    "land": 10,
+    "chapel": 2,
+    "cellar": 2,
     "village": 8,
-    "cellar": 4,
-    "festival": 4,
-    "smithy": 5,
+    "moneylender": 2,
+    "smithy": 3,
+    "laboratory": 4,
+    "festival": 2,
+    "council": 3,
     "mine": 2,
-    "bandit": 3,
-    "castle": 1
+    "castle": 1,
 }
 
 s_turn_counter = 0
@@ -20,4 +22,4 @@ s_game_mode = "castle race"
 
 s_trashpile = []
 
-s_game_version = "0.2.1"
+s_game_version = "0.3.1"
