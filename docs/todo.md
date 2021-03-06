@@ -110,17 +110,23 @@
     - [X] Receiving a card from the store is green
 
 === Version 0.4 ===
-
+- [ ] Enhance - Interface: Show "C" as a cancel option
+- [ ] Rework - Interface: "Money left" should be top item on "Current turn overview"
+- [ ] Enhance - Interface: Visually explain that scrolling is a thing
+- [ ] Enhance - Store: Highlight which cards can be bought using green, and show insufficient funds / out of stock cards using red
+- [ ] Bug - User input: Player was unable to use the backspace key on input
+- [ ] Enhance - Bug catching: Save some sort of transaction log
 - [ ] Bug - Interface: Interface crashes on resize of main game
 - [X] Bug - User input: If the input space is full, and the user presses delete, a "?" will remain on screen.
 - [ ] Bug - Interface: background sometimes not properly displayed
--
+- [ ] Bug - Gameplay: During playtesting, player ended up with 6 cards in their hand when they won the game
+- [ ] Feature - Card: Farming village card
 - [ ] Feature - Cards: new cards
-    - [ ] Chapel
+    - [X] Chapel
         - [X] Requires working trashpile
         - [X] Requires trashing method
         - [X] Card data
-        - [ ] Function
+        - [X] Function
     - [X] Mine
         - [X] Trash a money card, gain one quality higher
         - [X] Allow player to input a card name
@@ -147,6 +153,7 @@
         - [ ] Start screen
         - [ ] A "restart" option
     - [ ] Countdown mode: Get as much points as possible in X amount of turns
+    - [ ] Score more: Get to 30 points in as little turns and with the lowest amount of cards possible.
 - [X] Refactor - Interface: Have a generic method for choosing cards out of a list
     - [X] Method takes in a list of choices, and outputs a string
     - [X] Options for displaying certain information:
