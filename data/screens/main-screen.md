@@ -15,16 +15,16 @@
 +-------------------------+ {card name} xXY: $XY                               |                                                 |
 | Current turn overview:  | - card description. blahblahblah blahblahblah      |                                                 |
 |                         |   blahblahblah blahblahblah blahblahblah.          |                                                 |
-| Money in hand: $XYX     |                                                    |                                                 |
+| Money left: $XYZ        |                                                    |                                                 |
 | Actions left: XY        |                                                    |                                                 |
 | Purchases left: XY      | {card name} xXY: $XY                               |                                                 |
 | Bonus money: XY         | - card description. blahblahblah blahblahblah      |                                                 |
-| Money left: $XY         |   blahblahblah blahblahblah blahblahblah.          |                                                 |
+| Money in hand: $XYZ     |   blahblahblah blahblahblah blahblahblah.          |                                                 |
 |                         |                                                    |                                                 |
 |                         |                                                    |                                                 |
 +-------------------------+                                                    +-----------------------+-------------------------+
 |                         |                                                    |  List of controls:    |                         |
 |    Your input:          |                                                    |  A - Play action card |  Q - Quit game          |
 |    _________________    |                                                    |  S - Go to the store  |  E - End turn           |
-|                         |                                                    |                       |                         |
+|                         |                                                    |  C - Cancel           |                         |
 +-------------------------+----------------------------------------------------+-----------------------+-------------------------+

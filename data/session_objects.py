@@ -22,4 +22,4 @@ s_game_mode = "castle race"
 
 s_trashpile = []
 
-s_game_version = "0.3.1"
+s_game_version = "0.3.2"

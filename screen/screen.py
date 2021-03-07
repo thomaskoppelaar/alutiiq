@@ -140,7 +140,7 @@ class Screen:
 
 
             # Backspace key:
-            elif c == 127:
+            elif c == curses.KEY_BACKSPACE or c == 127:
 
                 # Try deleting the character.
                 # If said character does not exist, pass

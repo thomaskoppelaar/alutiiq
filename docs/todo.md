@@ -110,18 +110,27 @@
     - [X] Receiving a card from the store is green
 
 === Version 0.4 ===
-- [ ] Enhance - Interface: Show "C" as a cancel option
-- [ ] Rework - Interface: "Money left" should be top item on "Current turn overview"
+- [X] Enhance - Interface: Show "C" as a cancel option
+- [X] Rework - Interface: "Money left" should be top item on "Current turn overview"
 - [ ] Enhance - Interface: Visually explain that scrolling is a thing
+    - [ ] Display "Scroll down for more options" on the last line, if there is still content left to scroll to
+    - [ ] Ensure last line isn't covered by scroll text
 - [ ] Enhance - Store: Highlight which cards can be bought using green, and show insufficient funds / out of stock cards using red
-- [ ] Bug - User input: Player was unable to use the backspace key on input
+    - [ ] Current issue: format_cards doesn't know about the user's balance
+    - [ ] Furthermore, is this only relevant to the store, or would other actions benefit from this as well?
+    - [ ] (e.g.) an action card like mine showing how many cards are left of the next upgrade
+- [X] Bug - User input: Player was unable to use the backspace key on input
+    - [X] Issue: I have roughly 0 clue ~~how the input is handled~~ what keycodes refer can refer to a backspace
+    - [X] Fix: it might be the ASCII backspace (\x08 or \b) that I was missing
 - [ ] Enhance - Bug catching: Save some sort of transaction log
 - [ ] Bug - Interface: Interface crashes on resize of main game
+    - [ ] Fix: go back to initial resize routine if the size changes to be below the minimum
 - [X] Bug - User input: If the input space is full, and the user presses delete, a "?" will remain on screen.
 - [ ] Bug - Interface: background sometimes not properly displayed
-- [ ] Bug - Gameplay: During playtesting, player ended up with 6 cards in their hand when they won the game
+- [ ] Bug - Gameplay: During playtesting, player ended up with 6 cards in their hand when they won the games
 - [ ] Feature - Card: Farming village card
-- [ ] Feature - Cards: new cards
+- [X] Bug - Chapel: Player is able to trash more than 4 cards
+- [X] Feature - Cards: new cards
     - [X] Chapel
         - [X] Requires working trashpile
         - [X] Requires trashing method

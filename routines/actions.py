@@ -178,7 +178,7 @@ def chapel(p: Player, scr: Screen) -> bool:
         ["Which cards do you want to remove from your deck?", "Separate your choices with a comma."] + format_cards(cards, r_main_content.width)
     )
     
-    chosen_cards = input_cards_selection(cards, scr, min=1, max=len(p.current_hand))
+    chosen_cards = input_cards_selection(cards, scr, min=1, max=4)
     
     if chosen_cards == []: return False
 

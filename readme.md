@@ -14,7 +14,7 @@ It's heavily inspired by Dominion.
 ## Running the game
 
 1. Clone this repository.
-2. run `python game.py` to start playing.
+2. run `python game.py` or `python3 game.py` to start playing.
 
 ## How to play
 
