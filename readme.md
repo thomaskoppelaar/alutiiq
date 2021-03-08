@@ -8,7 +8,10 @@ It's heavily inspired by Dominion.
 ## Requirements
 
 1. Python 3+ (Tested on 3.8.6 only)
-2. Windows/Mac/Linux (Tested on linux only, any other OS _should_ work)
+2. The `curses` python module (pre-installed on linux)
+  - On Windows: run `python -m pip install windows-curses`
+
+Note that the game does not run well on Windows yet.
 
 
 ## Running the game
