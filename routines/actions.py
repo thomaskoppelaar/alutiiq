@@ -1,6 +1,6 @@
 # Action cards probably deserve their own little file
 from data import Player, Card
-from utils import clear_screen, load_card, input_card_selection, input_cards_selection, format_cards
+from utils import load_card, input_card_selection, input_cards_selection, format_cards
 from routines import store
 from screen import Screen, r_main_content
 

@@ -1,5 +1,5 @@
 from data import Player, Card, s_store
-from utils import load_card, clear_screen, input_card_selection, format_cards
+from utils import load_card, input_card_selection, format_cards
 from screen import Screen
 from screen import r_main_content
 
@@ -33,7 +33,6 @@ def purchase_card(p: Player, card: str, scr: Screen) -> bool:
         
         # Confirm purchase
         p.purchases_left -= 1
-        clear_screen()
         scr.log("Bought card: {0}".format(card), 1)
 
         p.add_discardpile_card(card_bought.name)

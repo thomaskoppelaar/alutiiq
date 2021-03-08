@@ -110,6 +110,14 @@
     - [X] Receiving a card from the store is green
 
 === Version 0.4 ===
+- [~] Enhance - Windows 10: Compatibility
+    - [ ] Update readme to include more detailed installation instructions
+    - [ ] User input: Arrow keys are yet again different, as well as backspace
+        - [ ] Create a list of ints that should be recognized as an (up/down/left/right) arrow key, and one for backspace
+    - [ ] Test in CMD
+        - [ ] Bug: When hitting enter on user input completion, UI for the rest of that line breaks
+    - [ ] Test in Powershell  
+
 - [X] Enhance - Interface: Show "C" as a cancel option
 - [X] Rework - Interface: "Money left" should be top item on "Current turn overview"
 - [ ] Enhance - Interface: Visually explain that scrolling is a thing
@@ -130,6 +138,7 @@
 - [ ] Bug - Gameplay: During playtesting, player ended up with 6 cards in their hand when they won the games
 - [ ] Feature - Card: Farming village card
 - [X] Bug - Chapel: Player is able to trash more than 4 cards
+    - [X] Fix: set correct limit
 - [X] Feature - Cards: new cards
     - [X] Chapel
         - [X] Requires working trashpile

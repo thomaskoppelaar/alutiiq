@@ -12,10 +12,6 @@ f.close()
 
 del(f)
 
-# System call to clear the console
-def clear_screen():
-    os.system('cls' if os.name=='nt' else 'clear')
-
 # (Boilerplate) Load a json dict into an object
 def load_card(card_name: str) -> Card:
     """

@@ -1,5 +1,4 @@
 from data import Player, session_objects
-from utils import clear_screen
 from screen import Screen
 
 def start_turn(p: Player, scr: Screen) -> None:

@@ -2,7 +2,7 @@ import random
 import curses
 
 from data import Player, s_store, session_objects
-from utils import load_card, clear_screen, format_cards
+from utils import load_card, format_cards
 from routines import actions, store, turns
 from screen import Screen, r_main_content
 
@@ -14,8 +14,6 @@ def start_new_game(p: Player, scr) -> None:
     """
     # Reset turn counter
     session_objects.s_turn_counter = 0
-
-    clear_screen()
     
     # Add starter cards into deck
     p.deck = ["copper coin"] * 7
